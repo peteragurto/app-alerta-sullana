@@ -4,7 +4,9 @@
 
     <uses-feature
         android:name="android.hardware.telephony"
-        android:required="false" />
+        android:required="false" /> <!-- Permiso para enviar SMS desde teléfono -->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -16,6 +18,9 @@
         android:theme="@style/Theme.AlertaSullana"
         tools:targetApi="31">
         <activity
+            android:name=".view.RegistroUsuarioActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
@@ -26,6 +31,4 @@
         </activity>
     </application>
 
-    <!--Permiso para enviar SMS desde teléfono-->
-    <uses-permission android:name="android.permission.SEND_SMS" />
 </manifest>
