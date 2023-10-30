@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "820869985928",
+    "project_id": "app-alerta-sullana",
+    "storage_bucket": "app-alerta-sullana.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:820869985928:android:bebd93e2db9f4b27c3113d",
+        "android_client_info": {
+          "package_name": "com.example.alertasullana"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUWCB2sLkLOjWOkySiDE0I5mLVQEzura8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
