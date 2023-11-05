@@ -1,4 +1,4 @@
-package com.example.alertasullana.view
+package com.example.alertasullana.ui.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
