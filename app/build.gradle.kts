@@ -33,12 +33,16 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
 
     // Fragment - Kotlin
     implementation("androidx.fragment:fragment-ktx:$1.5.5")
+    implementation("androidx.annotation:annotation:1.6.0")
     // Testing Fragments in Isolation
     debugImplementation("androidx.fragment:fragment-testing:$1.5.5")
     // Activity - Kotlin
