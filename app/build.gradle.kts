@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -43,6 +44,7 @@ dependencies {
     // Fragment - Kotlin
     implementation("androidx.fragment:fragment-ktx:1.5.5")
     implementation("androidx.annotation:annotation:1.7.0")
+    implementation("com.google.firebase:firebase-auth:22.2.0")
     // Testing Fragments in Isolation
     debugImplementation("androidx.fragment:fragment-testing:1.5.5")
     // Activity - Kotlin
