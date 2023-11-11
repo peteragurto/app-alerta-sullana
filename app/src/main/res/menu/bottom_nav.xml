@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="@string/inicio"
+        android:id="@+id/inicioB"
+        android:enabled="true"
+        android:icon="@drawable/baseline_home_24" />
+    <item
+        android:title="@string/notificacion"
+        android:id="@+id/notiB"
+        android:enabled="true"
+        android:icon="@drawable/baseline_notifications_24"/>
+    <item
+        android:title="@string/usuario"
+        android:id="@+id/usuarioB"
+        android:enabled="true"
+        android:icon="@drawable/baseline_account_circle_24"/>
+</menu>

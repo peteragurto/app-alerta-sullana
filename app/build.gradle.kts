@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -40,6 +41,8 @@ android {
 
 dependencies {
 
+    //mapa
+    implementation("com.google.android.gms:play-services-maps:18.0.0")
     // Fragment - Kotlin
     implementation("androidx.fragment:fragment-ktx:1.5.5")
     implementation("androidx.annotation:annotation:1.7.0")

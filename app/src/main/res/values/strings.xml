@@ -20,4 +20,8 @@
     <string name="comenzarString">Comenzar</string>
     <string name="register_google">Registrarse con Google</string>
     <string name="terminos">Al registrarse acepta los términos y condiciones, donde nos \npermita utilizar su información mientras la app este en uso.</string>
+    <string name="inicio">Inicio</string>
+    <string name="notificacion">Notificaciones</string>
+    <string name="usuario">Usuario</string>
+    <string name="reportButton_context">Boton para hacer un reporte</string>
 </resources>
