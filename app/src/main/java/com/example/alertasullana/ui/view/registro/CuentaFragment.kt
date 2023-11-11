@@ -1,4 +1,4 @@
-package com.example.alertasullana.ui.view.RegistroActivity
+package com.example.alertasullana.ui.view.registro
 
 import android.os.Bundle
 import android.view.LayoutInflater

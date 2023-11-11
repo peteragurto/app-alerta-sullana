@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.example.alertasullana"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.alertasullana"
         minSdk = 26
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -41,10 +41,10 @@ android {
 dependencies {
 
     // Fragment - Kotlin
-    implementation("androidx.fragment:fragment-ktx:$1.5.5")
-    implementation("androidx.annotation:annotation:1.6.0")
+    implementation("androidx.fragment:fragment-ktx:1.5.5")
+    implementation("androidx.annotation:annotation:1.7.0")
     // Testing Fragments in Isolation
-    debugImplementation("androidx.fragment:fragment-testing:$1.5.5")
+    debugImplementation("androidx.fragment:fragment-testing:1.5.5")
     // Activity - Kotlin
     implementation("androidx.activity:activity-ktx:1.8.0")
     // ViewModel

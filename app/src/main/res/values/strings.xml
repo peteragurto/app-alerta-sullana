@@ -11,4 +11,11 @@
     <string name="login_failed">"Login failed"</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="alerta_sullana">Alerta Sullana</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="splashlogo">SplashLogo</string>
+    <string name="pruebaSplash">PostSplashScreen</string>
+    <string name="unete">Únete a la comunidad\nque mantiene una\nSullana segura</string>
+    <string name="comenzarString">Comenzar</string>
 </resources>

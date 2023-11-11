@@ -4,7 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.widget.Toast
-import com.example.alertasullana.ui.view.RegistroActivity.RegistroUsuarioActivity
+import com.example.alertasullana.ui.view.registro.RegistroUsuarioActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/iglesiamatriz"
+    tools:context=".ui.view.splash.IntroActivity">
+
+    <!--fondoiglesia-->
+    <View
+        android:id="@+id/iglesiamatrizfondo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/iglesiamatr"/>
+
+    <View
+        android:id="@+id/logo_esquina"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@drawable/alertasullanavector"
+        android:layout_alignParentEnd="true"/>
+
+    <TextView
+        android:id="@+id/unete_a_la_c"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="450dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/unete"
+        android:textAppearance="@style/unetetext" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/boton_comenzar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/unete_a_la_c"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:text="@string/comenzarString"
+        android:textStyle="bold"
+        android:textColor="@color/md_theme_light_onBackground"
+        android:textAlignment="center"
+        android:fontFamily="sans-serif"
+
+        app:backgroundTint="@color/botonesintro"
+        />
+
+</RelativeLayout>

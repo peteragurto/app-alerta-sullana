@@ -1,0 +1,17 @@
+<resources>
+    <declare-styleable name="FullscreenAttrs">
+        <attr name="fullscreenBackgroundColor" format="color" />
+        <attr name="fullscreenTextColor" format="color" />
+    </declare-styleable>
+
+    <attr name="colorBotonesintro" format="color" />
+    <attr name="colorOnBotonesintro" format="color" />
+    <attr name="colorBotonesintroContainer" format="color" />
+    <attr name="colorOnBotonesintroContainer" format="color" />
+    <attr name="harmonizeBotonesintro" format="boolean" />
+    <attr name="colorNegativeactions" format="color" />
+    <attr name="colorOnNegativeactions" format="color" />
+    <attr name="colorNegativeactionsContainer" format="color" />
+    <attr name="colorOnNegativeactionsContainer" format="color" />
+    <attr name="harmonizeNegativeactions" format="boolean" />
+</resources>

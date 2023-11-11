@@ -2,8 +2,17 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.AlertaSullana" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/grisnegro</item>
+        <item name="android:navigationBarColor">@color/md_theme_light_onBackground</item>
+        <item name="actionBarTheme">@color/md_theme_light_onBackground</item>
     </style>
 
-    <style name="Theme.AlertaSullana" parent="Base.Theme.AlertaSullana" />
+    <style name="SplashTheme" parent="Base.Theme.AlertaSullana">
+        <item name="android:windowBackground">@drawable/splash_theme</item>
+    </style>
+
+    <style name="ThemeOverlay.AlertaSullana.FullscreenContainer" parent="">
+        <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
+        <item name="fullscreenTextColor">@color/light_blue_A200</item>
+    </style>
 </resources>
