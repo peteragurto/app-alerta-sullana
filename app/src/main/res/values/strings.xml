@@ -14,8 +14,10 @@
     <string name="alerta_sullana">Alerta Sullana</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="splashlogo">SplashLogo</string>
+    <string name="splashlogo">Alerta Sullana</string>
     <string name="pruebaSplash">PostSplashScreen</string>
     <string name="unete">Únete a la comunidad\nque mantiene una\nSullana segura</string>
     <string name="comenzarString">Comenzar</string>
+    <string name="register_google">Registrarse con Google</string>
+    <string name="terminos">Al registrarse acepta los términos y condiciones, donde nos \npermita utilizar su información mientras la app este en uso.</string>
 </resources>
