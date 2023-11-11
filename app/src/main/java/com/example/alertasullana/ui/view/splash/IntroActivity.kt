@@ -1,8 +1,10 @@
 package com.example.alertasullana.ui.view.splash
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.alertasullana.R
+import com.example.alertasullana.ui.view.registro.RegistroUsuarioActivity
 import com.google.android.material.button.MaterialButton
 
 class IntroActivity : AppCompatActivity() {
@@ -16,6 +18,7 @@ class IntroActivity : AppCompatActivity() {
         // Define el evento de clic del botón comenzar
         btnComenzar.setOnClickListener {
             // Haz algo cuando el botón se haga clic
+            startActivity(Intent(this, RegistroUsuarioActivity::class.java))
         }
     }
 }

@@ -4,6 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/md_theme_light_onBackground"
     tools:context=".ui.view.registro.RegistroUsuarioActivity">
+
+    <View
+        android:id="@+id/logo_en_registro"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/alertasullanavector"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="240dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/splashlogo"
+        android:textAlignment="center"
+        android:alpha="0.8"
+
+        android:textAppearance="@style/unetetext"
+        android:textStyle="bold"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo_en_registro" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_login_google"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="@string/register_google"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+
+
+        app:backgroundTint="#EA1D00"
+        app:icon="@drawable/googleicon"
+        app:iconGravity="end"
+        app:iconPadding="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:background="@color/md_theme_light_onBackground"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        android:text="@string/terminos"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        android:alpha="0.5"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
