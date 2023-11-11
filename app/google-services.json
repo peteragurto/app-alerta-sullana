@@ -12,7 +12,20 @@
           "package_name": "com.example.alertasullana"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "820869985928-1v3a6te12rd23du241hrs0asp2gl7pv6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.alertasullana",
+            "certificate_hash": "b2b745ad28cb39fc9f8bca034571c82bd5aca766"
+          }
+        },
+        {
+          "client_id": "820869985928-1pnqgdc13hlde35odgf71js2eegolk6q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCUWCB2sLkLOjWOkySiDE0I5mLVQEzura8"
@@ -20,7 +33,41 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "820869985928-1pnqgdc13hlde35odgf71js2eegolk6q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:820869985928:android:3d4c541f358b8838c3113d",
+        "android_client_info": {
+          "package_name": "com.example.loginscreen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "820869985928-1pnqgdc13hlde35odgf71js2eegolk6q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUWCB2sLkLOjWOkySiDE0I5mLVQEzura8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "820869985928-1pnqgdc13hlde35odgf71js2eegolk6q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
