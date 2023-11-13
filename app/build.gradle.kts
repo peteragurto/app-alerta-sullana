@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
-    id("com.google.gms.google-services")
+    id("com.google.gms.google-services") version "4.3.10"
 }
 
 android {
@@ -42,12 +42,9 @@ android {
 
 dependencies {
 
-    //mapa
-    implementation("com.google.android.gms:play-services-maps:18.0.0")
     // Fragment - Kotlin
     implementation("androidx.fragment:fragment-ktx:1.5.5")
     implementation("androidx.annotation:annotation:1.7.0")
-    implementation("com.google.firebase:firebase-auth:22.2.0")
     // Testing Fragments in Isolation
     debugImplementation("androidx.fragment:fragment-testing:1.5.5")
     // Activity - Kotlin
@@ -77,9 +74,11 @@ dependencies {
 
     // Import the BoM for the Firebase platform
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
-    // Add the dependency for the Firebase Authentication library
-    // When using the BoM, you don't specify versions in Firebase library dependencies
+    // Dependencias de Firebase
     implementation("com.google.firebase:firebase-auth-ktx:22.2.0")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
-
+    //mapa
+    implementation("com.google.android.gms:play-services-maps:18.0.0")
+    // Agrega la dependencia google-services
+    implementation("com.google.gms:google-services:4.3.10")
 }
