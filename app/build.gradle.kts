@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -43,6 +44,7 @@ dependencies {
     // Fragment - Kotlin
     implementation("androidx.fragment:fragment-ktx:1.5.5")
     implementation("androidx.annotation:annotation:1.7.0")
+
     // Testing Fragments in Isolation
     debugImplementation("androidx.fragment:fragment-testing:1.5.5")
     // Activity - Kotlin
@@ -74,6 +76,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
     // Add the dependency for the Firebase Authentication library
     // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-auth-ktx:22.2.0")
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
 
 }
