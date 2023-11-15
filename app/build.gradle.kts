@@ -79,5 +79,7 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-auth-ktx:22.2.0")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+    //Mapa Dependencias
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
 
 }

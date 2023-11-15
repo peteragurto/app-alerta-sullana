@@ -1,11 +1,11 @@
-package com.example.alertasullana.ui.view.registro
+package com.example.alertasullana.ui.registro
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.alertasullana.R
-import com.example.alertasullana.ui.view.principal.MainActivity
+import com.example.alertasullana.ui.principal.MainActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -62,7 +62,7 @@ class RegistroUsuarioActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         if(FirebaseAuth.getInstance().currentUser != null){
-            val i  = Intent(this,MainActivity::class.java)
+            val i  = Intent(this, MainActivity::class.java)
             startActivity(i)
         }
     }

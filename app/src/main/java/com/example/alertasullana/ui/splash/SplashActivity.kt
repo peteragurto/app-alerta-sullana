@@ -1,4 +1,4 @@
-package com.example.alertasullana.ui.view.splash
+package com.example.alertasullana.ui.splash
 
 import android.annotation.SuppressLint
 import android.content.Intent

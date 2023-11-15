@@ -4,15 +4,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.view.principal.MainActivity">
+    tools:context=".ui.principal.MainActivity">
 
-    <TextView
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/mapaSullana"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:layout_marginBottom="12dp"
+        app:backgroundTint="@color/md_theme_light_error"
+        app:shapeAppearance="@style/ShapeAppearance.Material3.Tooltip"
+        android:src="@drawable/baseline_campaign_24"
+        android:tint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationVista"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/boton_reportar_f"
+
+        android:elevation="6dp"/>
+
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationVista"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_alignParentBottom="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:backgroundTint="@color/md_theme_light_onBackground"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/md_theme_light_surface"
+        app:itemRippleColor="#808080"
+        app:menu="@menu/bottom_nav"
+        app:labelVisibilityMode="labeled"
+
+        android:elevation="6dp"/>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

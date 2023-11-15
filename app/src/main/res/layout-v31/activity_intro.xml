@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:clipToOutline="true"
     android:background="@color/white"
-    tools:context=".ui.view.splash.IntroActivity">
+    tools:context=".ui.splash.IntroActivity">
 
     <!--fondoiglesia-->
     <View

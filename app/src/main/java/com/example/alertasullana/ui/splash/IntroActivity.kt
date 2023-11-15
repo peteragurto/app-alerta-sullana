@@ -1,10 +1,10 @@
-package com.example.alertasullana.ui.view.splash
+package com.example.alertasullana.ui.splash
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.alertasullana.R
-import com.example.alertasullana.ui.view.registro.RegistroUsuarioActivity
+import com.example.alertasullana.ui.registro.RegistroUsuarioActivity
 import com.google.android.material.button.MaterialButton
 
 class IntroActivity : AppCompatActivity() {
