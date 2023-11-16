@@ -30,7 +30,6 @@
         android:elevation="6dp"/>
 
 
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationVista"
         android:layout_width="match_parent"
@@ -40,9 +39,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:backgroundTint="@color/md_theme_light_onBackground"
+        android:background="transparent"
         app:itemIconTint="@color/white"
-        app:itemTextColor="@color/md_theme_light_surface"
-        app:itemRippleColor="#808080"
+        app:itemTextColor="@color/white"
         app:menu="@menu/bottom_nav"
         app:labelVisibilityMode="labeled"
 
