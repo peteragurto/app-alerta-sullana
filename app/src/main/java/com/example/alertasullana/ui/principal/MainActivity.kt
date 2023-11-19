@@ -10,16 +10,22 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     //Inicializador de mapa
     private lateinit var mapa:GoogleMap
+    //Inicializador de la barra de navegacion
+    private lateinit var barraNavegacion: BottomNavigationView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        crearFragmento()
+        //Objetos
+        barraNavegacion = findViewById(R.id.bottomNavigationVista)
 
+        //Crear fragmento principal del mapa
+        crearFragmento()
     }
     //Función para declarar el fragmento
     private fun crearFragmento() {

@@ -24,4 +24,10 @@
     <string name="notificacion">Reportes</string>
     <string name="usuario">Usuario</string>
     <string name="boton_reportar_f">Boton para reportar hecho</string>
+    <string name="txt_misReportes">Mis reportes</string>
+    <string name="status_connected">Conectado</string>
+    <string name="txt_configuraciones">Configuraciones</string>
+    <string name="able_enable_notifications">Activar/Desactivar notificaciones</string>
+    <string name="txt_salirapp">  Salir de la aplicación</string>
+    <string name="imagen_del_usuario">imagen del usuario</string>
 </resources>

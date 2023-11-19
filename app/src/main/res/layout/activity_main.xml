@@ -11,6 +11,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/black"
         tools:context=".MainActivity" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -19,35 +20,35 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         app:backgroundTint="@color/md_theme_light_error"
-        app:shapeAppearance="@style/ShapeAppearance.Material3.Tooltip"
         android:src="@drawable/baseline_campaign_24"
-        android:tint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationVista"
+        app:layout_constraintBottom_toTopOf="@+id/navigationcontainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:contentDescription="@string/boton_reportar_f"
 
         android:elevation="6dp"/>
 
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationVista"
+    <LinearLayout
+        android:id="@+id/navigationcontainer"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:backgroundTint="@color/md_theme_light_onBackground"
-        android:background="transparent"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
-        app:menu="@menu/bottom_nav"
-        app:labelVisibilityMode="labeled"
+        android:background="@color/md_theme_light_onBackground">
 
-        android:elevation="6dp"/>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationVista"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            app:itemIconTint="@color/white"
+            app:itemBackground="@color/md_theme_light_onBackground"
+            app:itemTextColor="@color/white"
+            app:menu="@menu/bottom_nav"
+            app:labelVisibilityMode="labeled"
+            android:background="@android:color/transparent"
+            android:elevation="6dp"/>
 
-
-
-
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

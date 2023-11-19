@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/perfil_fragment_id"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.principal.PerfilFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/md_theme_light_onBackground">
+
+        <Button
+            android:id="@+id/btn_salirPerfil"
+            style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="16dp"
+            android:elevation="6dp"
+            android:backgroundTint="@color/md_theme_light_onBackground"
+            app:icon="@drawable/eliminar_ic"
+            app:iconTint="@color/white"
+            app:iconGravity="start"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.049"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imagenMarca"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop"
+            android:src="@drawable/fondotopprofile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imagenProfile"
+            android:layout_width="109dp"
+            android:layout_height="105dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/usuario"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imagenMarca"
+            android:contentDescription="@string/imagen_del_usuario" />
+
+        <TextView
+            android:id="@+id/nombreUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_horizontal"
+            android:text="Nombre de Usuario"
+            android:textAlignment="center"
+            android:textStyle="normal"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="@+id/imagenMarca"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="@+id/imagenMarca"
+            app:layout_constraintTop_toBottomOf="@+id/imagenProfile" />
+
+        <TextView
+            android:id="@+id/correoUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:alpha="0.5"
+            android:gravity="center_horizontal"
+            android:text="Correo del usuario"
+            android:textColor="@color/white"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="@+id/imagenMarca"
+            app:layout_constraintTop_toBottomOf="@+id/nombreUser" />
+
+        <TextView
+            android:id="@+id/connectionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:drawablePadding="8dp"
+            android:text="@string/status_connected"
+            android:textColor="#00FF00"
+            android:textSize="16sp"
+            android:alpha="0.7"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/correoUser" />
+
+        <Button
+            android:id="@+id/btnVerReportes"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/txt_misReportes"
+            android:textAlignment="textStart"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:padding="0dp"
+            app:icon="@drawable/reportes_ic_24"
+            app:iconGravity="start"
+            app:iconSize="24sp"
+            app:iconTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/connectionTextView" />
+
+        <TextView
+            android:id="@+id/descriptConfiguracion"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnVerReportes"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:text="@string/txt_configuraciones"
+            android:textAlignment="textStart"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:alpha="0.5"/>
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/sw_notificaciones"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:checked="true"
+            android:text="@string/able_enable_notifications"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descriptConfiguracion"
+
+            app:trackTint="@drawable/switch_trackcolor"/>
+
+        <Button
+            android:id="@+id/btnSalirApp"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+
+            android:layout_marginTop="12dp"
+            android:text="@string/txt_salirapp"
+            android:textAlignment="textStart"
+            android:textColor="#FF2424"
+            android:textSize="20sp"
+            android:padding="2dp"
+            app:icon="@drawable/salida_ic"
+            app:iconGravity="start"
+            app:iconSize="24sp"
+            app:iconTint="#FF2424"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sw_notificaciones" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

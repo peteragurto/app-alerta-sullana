@@ -72,4 +72,5 @@
     <color name="md_theme_dark_scrim">#000000</color>
     <color name="botonesintro">#FFAA12</color>
     <color name="negativeactions">#EA1D00</color>
+    <color name="gris2">#81434343</color>
 </resources>
