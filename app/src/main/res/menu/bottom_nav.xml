@@ -2,15 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="@string/inicio"
-        android:id="@+id/inicio"
+        android:id="@+id/bottom_home"
+        android:title="Inicio"
         android:icon="@drawable/baseline_home_24"/>
+
     <item
-        android:title="@string/notificacion"
-        android:id="@+id/noti"
-        android:icon="@drawable/baseline_notifications_24"/>
+        android:id="@+id/bottom_noti"
+        android:title="Notificación"
+        android:icon="@drawable/baseline_notifications_none_24"/>
+
     <item
-        android:title="@string/usuario"
-        android:id="@+id/usuario"
-        android:icon="@drawable/baseline_account_circle_24"/>
+        android:id="@+id/bottom_users"
+        android:title="Usuario"
+        android:icon="@drawable/baseline_manage_accounts_24"/>
+
 </menu>

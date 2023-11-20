@@ -73,4 +73,11 @@
     <color name="botonesintro">#FFAA12</color>
     <color name="negativeactions">#EA1D00</color>
     <color name="gris2">#81434343</color>
+    <color name="red">#FF2D00 </color>
+    <color name="grey">#0E0E0E</color>
+
+    //Modo oscuro
+    <color name="colorBackgroundDark">#333333</color>
+    <color name="colorPrimaryDark">#1A1A1A</color>
+    <color name="colorAccentDark">#FF4081</color>
 </resources>
