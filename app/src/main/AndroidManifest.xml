@@ -7,10 +7,16 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!--Ubicacion-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!--Camara-->
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature
         android:name="android.hardware.telephony"
-        android:required="false" /> <!-- Permiso para enviar SMS desde teléfono -->
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <!-- Permiso para enviar SMS desde teléfono -->
     <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application

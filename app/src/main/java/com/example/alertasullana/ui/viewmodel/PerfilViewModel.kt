@@ -4,8 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.alertasullana.data.repository.FirebaseRepository
+import com.example.alertasullana.data.repository.UsuarioRepository
 
-class PerfilViewModel(private val firebaseRepository: FirebaseRepository) : ViewModel() {
+class PerfilViewModel(private val firebaseRepository: FirebaseRepository,//LLamar a Usuario Repository
+                      private val usuarioRepository: UsuarioRepository
+) : ViewModel() {
     private val _nombreUsuario = MutableLiveData<String>()
     private val _correoUsuario = MutableLiveData<String>()
     private val _urlFotoPerfil = MutableLiveData<String>()
@@ -25,6 +28,9 @@ class PerfilViewModel(private val firebaseRepository: FirebaseRepository) : View
             _nombreUsuario.value = currentUser.displayName
             _correoUsuario.value = currentUser.email
             _urlFotoPerfil.value = currentUser.photoUrl?.toString()
+
+            // Guardar los datos en SharedPreferences
+            usuarioRepository.guardarDatosEnSharedPreferences(currentUser)
         }
     }
 
