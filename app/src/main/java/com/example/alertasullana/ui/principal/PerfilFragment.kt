@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.alertasullana.R
 import com.example.alertasullana.data.repository.FirebaseRepository
+import com.example.alertasullana.data.repository.UsuarioRepository
 import com.example.alertasullana.ui.registro.RegistroUsuarioActivity
 import com.example.alertasullana.ui.viewmodel.PerfilViewModel
 import com.example.alertasullana.ui.viewmodel.PerfilViewModelFactory
@@ -44,9 +45,16 @@ class PerfilFragment : Fragment() {
         val btnSalir = view.findViewById<Button>(R.id.btn_salirPerfil)//Minimizar perfil
         val btnCerrarSesion = view.findViewById<Button>(R.id.btnSalirApp)//Cerrar sesión
 
+        // Crear el repositorio de usuario
+        val usuarioRepository = UsuarioRepository(requireContext()) // Puedes ajustar esto según tus necesidades
+
+
         //-------------------------------------------------------RECUPERACIÓN DE DATOS DE USUARIO
         // Inicializar ViewModel con el repositorio
-        perfilViewModel = ViewModelProvider(this, PerfilViewModelFactory(FirebaseRepository())).get(PerfilViewModel::class.java)
+        perfilViewModel = ViewModelProvider(
+            this,
+            PerfilViewModelFactory(FirebaseRepository(), usuarioRepository)
+        ).get(PerfilViewModel::class.java)
         // Observar cambios en los datos del usuario y actualizar la interfaz
         perfilViewModel.nombreUsuario.observe(viewLifecycleOwner) { nombre ->
             view?.findViewById<TextView>(R.id.nombreUser)?.text = nombre
