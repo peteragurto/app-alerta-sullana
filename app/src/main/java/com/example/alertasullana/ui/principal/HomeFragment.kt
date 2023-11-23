@@ -1,17 +1,18 @@
 package com.example.alertasullana.ui.principal
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.example.alertasullana.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -78,6 +79,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButto
         ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
 
     // Activa la funcionalidad de ubicación en tiempo real
+    @SuppressLint("MissingPermission")
     private fun enableLocation() {
         if (!::map.isInitialized) return
         // Verifica si se han concedido los permisos de ubicación
@@ -110,6 +112,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButto
     }
 
     // Callback para manejar la respuesta del usuario a la solicitud de permisos
+    @SuppressLint("MissingPermission")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -134,6 +137,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButto
     }
 
     // Callback para manejar la resolución al reanudar la aplicación
+    @SuppressLint("MissingPermission")
     override fun onResume() {
         super.onResume()
         if (!::map.isInitialized) return
@@ -160,7 +164,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButto
 
     // Callback para manejar el clic en el botón de ubicación en tiempo real
     override fun onMyLocationButtonClick(): Boolean {
-        Toast.makeText(requireContext(), "Boton pulsado", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Viajando a tu ubicación actual", Toast.LENGTH_SHORT).show()
         return false
     }
 
