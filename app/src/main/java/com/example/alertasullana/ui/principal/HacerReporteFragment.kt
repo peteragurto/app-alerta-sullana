@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.alertasullana.R
 
@@ -15,12 +16,12 @@ class HacerReporteFragment : Fragment() {
 
     //Imagen cargada del anterior fragmento
     private var imageUri: Uri? = null
+    //Clase para recibir argumentos
+    private val args:HacerReporteFragmentArgs by navArgs()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            imageUri = it.getParcelable("imageUri")
-        }
 
+        imageUri = Uri.parse(args.imageUri)
     }
 
     override fun onCreateView(

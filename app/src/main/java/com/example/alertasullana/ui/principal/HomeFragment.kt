@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.alertasullana.R
 import com.example.alertasullana.data.services.ImagenCapturaListener
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -248,10 +249,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButto
         }
     }
 
-    public fun setImageCaptureListener(listener: ImagenCapturaListener) {
-        this.imageCaptureListener = listener
-    }
-
     //Función para abrir la cámara y tomar foto del delito
     private fun openCamera() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -264,25 +261,13 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButto
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            // La foto se capturó con éxito
-            // Aquí puedes pasar la imagen a HacerReporteFragment o realizar otras acciones necesarias
             val imageUri: Uri? = data?.data
             if (imageUri != null) {
-                // Llama al método en la interfaz para enviar la imagen
-                imageCaptureListener?.onImageCaptured(imageUri)
-
-                // Crea una instancia de HacerReporteFragment y pasa la imagen como argumento
-                val hacerReporteFragment = HacerReporteFragment().apply {
-                    arguments = Bundle().apply {
-                        putParcelable("imageUri", imageUri)
-                    }
-                }
-
-                // Reemplace el fragmento actual con HacerReporteFragment
-                activity?.supportFragmentManager?.beginTransaction()
-                    ?.replace(R.id.fragment_container, hacerReporteFragment)
-                    ?.addToBackStack(null)
-                    ?.commit()
+                // Crear una acción de navegación y pasar la imagen como argumento
+                val action = HomeFragmentDirections.actionHomeFragmentToHacerReporteFragment(
+                    imageUri.toString()
+                )
+                findNavController().navigate(action)
             }
         }
     }

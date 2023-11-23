@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    tools:ignore="InvalidNavigation"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.alertasullana.ui.principal.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/actionHomeFragmentToHacerReporteFragment"
+            app:destination="@id/hacerReporteFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/reporteFragment"
+        android:name="com.example.alertasullana.ui.principal.ReporteFragment"
+        android:label="fragment_reporte"
+        tools:layout="@layout/fragment_reporte" />
+
+    <fragment
+        android:id="@+id/perfilFragment"
+        android:name="com.example.alertasullana.ui.principal.PerfilFragment"
+        android:label="fragment_perfil"
+        tools:layout="@layout/fragment_perfil" />
+
+    <fragment
+        android:id="@+id/hacerReporteFragment"
+        android:name="com.example.alertasullana.ui.principal.HacerReporteFragment"
+        android:label="fragment_perfil"
+        tools:layout="@layout/fragment_hacer_reporte">
+
+        <argument
+            android:name="imageUri"
+            app:argType="string" />
+    </fragment>
+
+</navigation>

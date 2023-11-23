@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -47,6 +48,9 @@ dependencies {
     implementation("com.google.firebase:firebase-auth:22.2.0")
     //Room - Almacenamiento local
     implementation("androidx.room:room-common:2.6.0")
+    //Navegación
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.5")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
 
     // Testing Fragments in Isolation
     debugImplementation("androidx.fragment:fragment-testing:1.5.5")

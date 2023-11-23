@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
 import com.example.alertasullana.R
 import com.example.alertasullana.data.services.ImagenCapturaListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -13,6 +14,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity(), ImagenCapturaListener {
     //Inicializador de la barra de navegacion
     private lateinit var bottomNavigationView: BottomNavigationView
+    //Controlador de navegacion
+    private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
