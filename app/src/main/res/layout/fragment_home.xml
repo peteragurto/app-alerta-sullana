@@ -23,6 +23,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="92dp"
         android:src="@drawable/baseline_campaign_24"
-        android:backgroundTint="@color/red"/>
+        android:backgroundTint="@color/red"
+        android:contentDescription="@string/descripcion_btn_alerta" />
 
 </RelativeLayout>

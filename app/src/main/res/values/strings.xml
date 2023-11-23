@@ -30,4 +30,8 @@
     <string name="able_enable_notifications">Activar/Desactivar notificaciones</string>
     <string name="txt_salirapp">  Salir de la aplicación</string>
     <string name="imagen_del_usuario">imagen del usuario</string>
+    <string name="descripcion_btn_alerta">Botón para tomar foto del reporte</string>
+    <string name="descrip_imagenDelito">Aquí se cargará la imagen del delito</string>
+    <string name="describe_el_delito">Describe el delito</string>
+    <string name="escriba_el_delito">Escriba el delito</string>
 </resources>
