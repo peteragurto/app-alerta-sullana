@@ -2,10 +2,14 @@ package com.example.alertasullana.ui.principal
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity.RESULT_OK
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +18,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.alertasullana.R
+import com.example.alertasullana.data.services.ImagenCapturaListener
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -21,27 +26,52 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMapClickListener {
 
     private lateinit var map: GoogleMap
+    //Instancia de ImagenCapturaListener
+    private var imageCaptureListener: ImagenCapturaListener? = null
 
     companion object {
         const val REQUEST_CODE_LOCATION = 0
+        //Códigos para permisos de la cámara
+        private val REQUEST_CAMERA_PERMISSION = 100
+        private val REQUEST_IMAGE_CAPTURE = 101
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Obtén la referencia a la actividad y configura el listener
+        activity?.let {
+            if (it is ImagenCapturaListener) {
+                imageCaptureListener = it
+            }
+        }
+
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         // Inicializa el fragmento del mapa
         createFragment()
         // Establece el color de fondo del fragmento
         view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorBackgroundDark))
+
+        // Botón flotante
+        val fab: FloatingActionButton = view.findViewById(R.id.fab)
+        fab.setOnClickListener {
+            // Solicitar permisos de cámara
+            requestCameraPermission()
+        }
         return view
     }
+    //==========================================================================================================
 
+    //FUNCIONES PARA EL MAPA
+    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------
     // Función para inicializar el fragmento del mapa
     private fun createFragment() {
         val mapFragment : SupportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
@@ -111,30 +141,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButto
         }
     }
 
-    // Callback para manejar la respuesta del usuario a la solicitud de permisos
-    @SuppressLint("MissingPermission")
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        when (requestCode) {
-            REQUEST_CODE_LOCATION -> {
-                // Verifica si el usuario concedió los permisos
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Si se concedieron, habilita la capa de ubicación en tiempo real del mapa
-                    map.isMyLocationEnabled = true
-                } else {
-                    // Si se denegaron, muestra un mensaje al usuario
-                    Toast.makeText(
-                        requireContext(),
-                        "Para activar la localización ve a ajustes y acepta los permisos",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        }
-    }
 
     // Callback para manejar la resolución al reanudar la aplicación
     @SuppressLint("MissingPermission")
@@ -172,4 +178,118 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButto
     override fun onMapClick(p0: LatLng) {
         Toast.makeText(requireContext(), "Estas en ${p0.latitude}, ${p0.longitude}", Toast.LENGTH_SHORT).show()
     }
+    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------
+    //FUNCIONES PARA EL MAPA
+
+
+    // Callback para manejar la respuesta del usuario a la solicitud de permisos
+    @Deprecated("Deprecated in Java")
+    @SuppressLint("MissingPermission")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            REQUEST_CODE_LOCATION -> {
+                // Verifica si el usuario concedió los permisos de ubicación
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Si se concedieron, habilita la capa de ubicación en tiempo real del mapa
+                    map.isMyLocationEnabled = true
+                } else {
+                    // Si se denegaron, muestra un mensaje al usuario
+                    Toast.makeText(
+                        requireContext(),
+                        "Para activar la localización ve a ajustes y acepta los permisos",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            REQUEST_CAMERA_PERMISSION -> {
+                // Verifica si el usuario concedió los permisos de la cámara
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Si se concedieron, abre la cámara
+                    openCamera()
+                } else {
+                    // Si se denegaron, muestra un mensaje al usuario
+                    Toast.makeText(
+                        requireContext(),
+                        "Para usar la cámara ve a ajustes y acepta los permisos",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
+
+    //FUNCIONES PARA LA CÁMARA
+    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------
+    //Permiso para abri camara con su funcionalidad
+    private fun requestCameraPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // No se concedieron los permisos, solicitarlos
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.CAMERA),
+                REQUEST_CAMERA_PERMISSION
+            )
+        } else {
+            // Los permisos ya están concedidos, abrir la cámara
+            openCamera()
+        }
+    }
+
+    public fun setImageCaptureListener(listener: ImagenCapturaListener) {
+        this.imageCaptureListener = listener
+    }
+
+    //Función para abrir la cámara y tomar foto del delito
+    private fun openCamera() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (takePictureIntent.resolveActivity(requireActivity().packageManager) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            // La foto se capturó con éxito
+            // Aquí puedes pasar la imagen a HacerReporteFragment o realizar otras acciones necesarias
+            val imageUri: Uri? = data?.data
+            if (imageUri != null) {
+                // Llama al método en la interfaz para enviar la imagen
+                imageCaptureListener?.onImageCaptured(imageUri)
+
+                // Crea una instancia de HacerReporteFragment y pasa la imagen como argumento
+                val hacerReporteFragment = HacerReporteFragment().apply {
+                    arguments = Bundle().apply {
+                        putParcelable("imageUri", imageUri)
+                    }
+                }
+
+                // Reemplace el fragmento actual con HacerReporteFragment
+                activity?.supportFragmentManager?.beginTransaction()
+                    ?.replace(R.id.fragment_container, hacerReporteFragment)
+                    ?.addToBackStack(null)
+                    ?.commit()
+            }
+        }
+    }
+
+
+    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------
+    //FUNCIONES PARA LA CÁMARA
 }

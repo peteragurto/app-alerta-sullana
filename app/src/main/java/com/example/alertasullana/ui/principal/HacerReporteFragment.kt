@@ -1,20 +1,25 @@
 package com.example.alertasullana.ui.principal
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.alertasullana.R
 
 
 class HacerReporteFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
+    //Imagen cargada del anterior fragmento
+    private var imageUri: Uri? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        arguments?.let {
+            imageUri = it.getParcelable("imageUri")
+        }
 
     }
 
@@ -22,6 +27,16 @@ class HacerReporteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //AAqui cargo la imagen
+        // ImageView
+        val imagenDelito: ImageView = requireView().findViewById(R.id.imagen_delito)
+        // Cargar la imagen con Glide
+        imageUri?.let {
+            Glide.with(this)
+                .load(it)
+                .into(imagenDelito)
+        }
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_hacer_reporte, container, false)
     }

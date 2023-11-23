@@ -1,14 +1,16 @@
 package com.example.alertasullana.ui.principal
 
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.alertasullana.R
+import com.example.alertasullana.data.services.ImagenCapturaListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ImagenCapturaListener {
     //Inicializador de la barra de navegacion
     private lateinit var bottomNavigationView: BottomNavigationView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +38,14 @@ class MainActivity : AppCompatActivity() {
         replaceFragment(HomeFragment())
     }
     private fun replaceFragment(fragment: Fragment){
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    override fun onImageCaptured(imageUri: Uri) {
+        TODO("Not yet implemented")
     }
 }
 
