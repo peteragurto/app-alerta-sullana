@@ -14,7 +14,7 @@
         tools:context=".HomeFragment" />
 
     <!-- Boton Flotante -->
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,26 +22,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="92dp"
-        app:fab_icon="@drawable/baseline_campaign_24"
-        app:fab_addButtonColorNormal="@color/red"
-        app:fab_addButtonColorPressed="@color/red">
-        <!-- Boton Flotante Menu -->
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/idCamara"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/colorAccentDark"
-            app:fab_icon="@drawable/baseline_camera_alt_24"
-            app:fab_size="mini"/>
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/idTelefono"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/botonesintro"
-            app:fab_icon="@drawable/baseline_phone_24"
-            app:fab_size="mini" />
-
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+        android:src="@drawable/baseline_campaign_24"
+        android:backgroundTint="@color/red"/>
 
 </RelativeLayout>

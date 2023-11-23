@@ -83,7 +83,5 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:18.1.0")
     //Biblioteca GLide
     implementation("com.github.bumptech.glide:glide:4.16.0")
-    //Libreria de BottonFlotante
-    implementation("com.getbase:floatingactionbutton:1.10.1")
 
 }
