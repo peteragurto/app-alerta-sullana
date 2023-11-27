@@ -6,21 +6,37 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.example.alertasullana.R
+import com.example.alertasullana.data.repository.FirebaseRepository
+import com.example.alertasullana.ui.principal.MainActivity
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
 
+    private val firebaseRepository = FirebaseRepository()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
         Handler().postDelayed(
             {
-                //Inicia actividad después de un retardo
-                startActivity(Intent(this, IntroActivity::class.java))
-                finish()
-            },2000
+                verificarUsuarioAutenticado()
+            }, 1500
         )
+    }
 
+    // Método para verificar si hay un usuario autenticado
+    private fun verificarUsuarioAutenticado() {
+        val usuarioActual = firebaseRepository.obtenerUsuarioActual()
+
+        if (usuarioActual != null) {
+            // Usuario autenticado, ir a MainActivity
+            startActivity(Intent(this, MainActivity::class.java))
+        } else {
+            // No hay usuario autenticado, ir a IntroActivity
+            startActivity(Intent(this, IntroActivity::class.java))
+        }
+
+        finish()
     }
 }

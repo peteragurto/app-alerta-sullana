@@ -80,4 +80,9 @@
     <color name="colorBackgroundDark">#333333</color>
     <color name="colorPrimaryDark">#1A1A1A</color>
     <color name="colorAccentDark">#FF4081</color>
+
+    //Color magic
+    <color name="Oscurito">#1a1a1a</color>
+    <color name="MineShaft">#3d3d3d</color>
+    <color name="BlazeOrange">#ff6e00</color>
 </resources>
