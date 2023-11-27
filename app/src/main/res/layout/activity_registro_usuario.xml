@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_theme_light_onBackground"
+    android:background="@color/Oscurito"
     tools:context=".ui.registro.RegistroUsuarioActivity">
 
     <View
@@ -54,7 +54,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
-        android:background="@color/md_theme_light_onBackground"
+        android:background="@color/Oscurito"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         app:layout_constraintBottom_toBottomOf="parent"

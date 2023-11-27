@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/md_theme_light_onBackground">
+        android:background="@color/Oscurito">
 
         <Button
             android:id="@+id/btn_salirPerfil"
@@ -20,7 +20,7 @@
 
             android:layout_marginTop="16dp"
             android:elevation="6dp"
-            android:backgroundTint="@color/md_theme_light_onBackground"
+            android:backgroundTint="@color/Oscurito"
             app:icon="@drawable/eliminar_ic"
             app:iconTint="@color/white"
             app:iconGravity="start"
