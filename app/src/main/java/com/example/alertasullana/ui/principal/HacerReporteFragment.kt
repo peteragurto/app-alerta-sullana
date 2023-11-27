@@ -1,45 +1,44 @@
 package com.example.alertasullana.ui.principal
 
-import android.net.Uri
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
 import com.example.alertasullana.R
 
 
 class HacerReporteFragment : Fragment() {
 
     //Imagen cargada del anterior fragmento
-    private var imageUri: Uri? = null
+    //private var imageUri: Uri? = null
     //Clase para recibir argumentos
-    private val args:HacerReporteFragmentArgs by navArgs()
+    //private val args:HacerReporteFragmentArgs by navArgs()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        imageUri = Uri.parse(args.imageUri)
+        //imageUri = Uri.parse(args.imageUri)
+
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //AAqui cargo la imagen
+        val view = inflater.inflate(R.layout.fragment_hacer_reporte, container, false)
+
         // ImageView
-        val imagenDelito: ImageView = requireView().findViewById(R.id.imagen_delito)
-        // Cargar la imagen con Glide
-        imageUri?.let {
-            Glide.with(this)
-                .load(it)
-                .into(imagenDelito)
-        }
+        val imageView: ImageView = view.findViewById(R.id.imagen_delito)
+        // Recuperar la imagen de los argumentos
+        val imageBitmap = arguments?.getParcelable<Bitmap>("image")
+        imageView.setImageBitmap(imageBitmap)
+
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_hacer_reporte, container, false)
+        return view
     }
 
     companion object {

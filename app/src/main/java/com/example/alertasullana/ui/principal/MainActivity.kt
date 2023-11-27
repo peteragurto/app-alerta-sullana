@@ -1,17 +1,17 @@
 package com.example.alertasullana.ui.principal
 
 
-import android.net.Uri
+import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import com.example.alertasullana.R
-import com.example.alertasullana.data.services.ImagenCapturaListener
+import com.example.alertasullana.data.services.CameraResultListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
-class MainActivity : AppCompatActivity(), ImagenCapturaListener {
+class MainActivity : AppCompatActivity(), CameraResultListener {
     //Inicializador de la barra de navegacion
     private lateinit var bottomNavigationView: BottomNavigationView
     //Controlador de navegacion
@@ -47,9 +47,20 @@ class MainActivity : AppCompatActivity(), ImagenCapturaListener {
             .commit()
     }
 
-    override fun onImageCaptured(imageUri: Uri) {
-        TODO("Not yet implemented")
+    override fun onCameraResult(imageBitmap: Bitmap) {
+        // Cambia al nuevo fragmento y pasa la imagen
+        val newFragment = HacerReporteFragment()
+        val bundle = Bundle()
+        bundle.putParcelable("image", imageBitmap)
+        newFragment.arguments = bundle
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, newFragment)
+            .addToBackStack(null)
+            .commit()
     }
+
+
 }
 
 

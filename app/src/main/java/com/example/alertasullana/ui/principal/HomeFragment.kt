@@ -6,8 +6,8 @@ import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.location.LocationManager
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -17,9 +17,8 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.example.alertasullana.R
-import com.example.alertasullana.data.services.ImagenCapturaListener
+import com.example.alertasullana.data.services.CameraResultListener
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -33,13 +32,13 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButto
 
     private lateinit var map: GoogleMap
     //Instancia de ImagenCapturaListener
-    private var imageCaptureListener: ImagenCapturaListener? = null
+    private var cameraResultListener: CameraResultListener? = null
 
     companion object {
         const val REQUEST_CODE_LOCATION = 0
         //Códigos para permisos de la cámara
-        private val REQUEST_CAMERA_PERMISSION = 100
-        private val REQUEST_IMAGE_CAPTURE = 101
+        private const val PERMISSION_REQUEST_CODE = 100
+        private const val REQUEST_IMAGE_CAPTURE = 101
     }
 
     override fun onCreateView(
@@ -48,8 +47,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButto
     ): View? {
         // Obtén la referencia a la actividad y configura el listener
         activity?.let {
-            if (it is ImagenCapturaListener) {
-                imageCaptureListener = it
+            if (it is CameraResultListener) {
+                cameraResultListener = it
             }
         }
 
@@ -63,7 +62,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButto
         val fab: FloatingActionButton = view.findViewById(R.id.fab)
         fab.setOnClickListener {
             // Solicitar permisos de cámara
-            requestCameraPermission()
+            openCamera()
         }
         return view
     }
@@ -185,96 +184,88 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationButto
     //FUNCIONES PARA EL MAPA
 
 
-    // Callback para manejar la respuesta del usuario a la solicitud de permisos
-    @Deprecated("Deprecated in Java")
-    @SuppressLint("MissingPermission")
+    //FUNCIONES PARA LA CÁMARA
+    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------
+
+    //Abrir la cámara
+    fun openCamera() {
+        if (checkPermission()) {
+            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            if (takePictureIntent.resolveActivity(requireActivity().packageManager) != null) {
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+            }
+        } else {
+            requestPermission()
+        }
+    }
+
+    //Verificar permisos de la cámara
+    private fun checkPermission(): Boolean {
+        return (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) ==
+                PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(requireContext(),
+            Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+    }
+
+    //Solicitar permisos de la cámara al usuario
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST_CODE)
+    }
+
+    // Callback para manejar el resultado de la cámara
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            val imageBitmap = data?.extras?.get("data") as Bitmap
+            cameraResultListener?.onCameraResult(imageBitmap)
+        }
+    }
+
+    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------
+    //FUNCIONES PARA LA CÁMARA
+
+    //FUNCIONES PARA LOS PERMISOS
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
         when (requestCode) {
-            REQUEST_CODE_LOCATION -> {
-                // Verifica si el usuario concedió los permisos de ubicación
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Si se concedieron, habilita la capa de ubicación en tiempo real del mapa
-                    map.isMyLocationEnabled = true
-                } else {
-                    // Si se denegaron, muestra un mensaje al usuario
-                    Toast.makeText(
-                        requireContext(),
-                        "Para activar la localización ve a ajustes y acepta los permisos",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-            REQUEST_CAMERA_PERMISSION -> {
-                // Verifica si el usuario concedió los permisos de la cámara
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Si se concedieron, abre la cámara
-                    openCamera()
-                } else {
-                    // Si se denegaron, muestra un mensaje al usuario
-                    Toast.makeText(
-                        requireContext(),
-                        "Para usar la cámara ve a ajustes y acepta los permisos",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
+            REQUEST_CODE_LOCATION -> handleLocationPermissionsResult(grantResults)
+            PERMISSION_REQUEST_CODE -> handleCameraPermissionsResult(grantResults)
+            // Agrega más casos según sea necesario para otras solicitudes de permisos
         }
     }
 
-
-    //FUNCIONES PARA LA CÁMARA
-    //-------------------------------------------------------------------------------------------------------
-    //-------------------------------------------------------------------------------------------------------
-    //-------------------------------------------------------------------------------------------------------
-    //Permiso para abri camara con su funcionalidad
-    private fun requestCameraPermission() {
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.CAMERA
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            // No se concedieron los permisos, solicitarlos
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(Manifest.permission.CAMERA),
-                REQUEST_CAMERA_PERMISSION
-            )
+    // Callback para manejar el resultado de los permisos de ubicación
+    @SuppressLint("MissingPermission")
+    private fun handleLocationPermissionsResult(grantResults: IntArray) {
+        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            // Si se concedieron, habilita la capa de ubicación en tiempo real del mapa
+            map.isMyLocationEnabled = true
         } else {
-            // Los permisos ya están concedidos, abrir la cámara
-            openCamera()
+            // Si se denegaron, muestra un mensaje al usuario
+            Toast.makeText(
+                requireContext(),
+                "Para activar la localización ve a ajustes y acepta los permisos",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
-    //Función para abrir la cámara y tomar foto del delito
-    private fun openCamera() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (takePictureIntent.resolveActivity(requireActivity().packageManager) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-        }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            val imageUri: Uri? = data?.data
-            if (imageUri != null) {
-                // Crear una acción de navegación y pasar la imagen como argumento
-                val action = HomeFragmentDirections.actionHomeFragmentToHacerReporteFragment(
-                    imageUri.toString()
-                )
-                findNavController().navigate(action)
+    // Callback para manejar el resultado de la cámara
+    private fun handleCameraPermissionsResult(grantResults: IntArray) {
+        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(requireContext(), "Permiso concedido", Toast.LENGTH_SHORT).show()
+            // Ahora, puedes continuar con la lógica relacionada con la cámara si es necesario
+            if (checkPermission()) {
+                openCamera()
             }
+        } else {
+            Toast.makeText(requireContext(), "Permiso denegado", Toast.LENGTH_SHORT).show()
         }
     }
 
-
-    //-------------------------------------------------------------------------------------------------------
-    //-------------------------------------------------------------------------------------------------------
-    //-------------------------------------------------------------------------------------------------------
-    //FUNCIONES PARA LA CÁMARA
 }
