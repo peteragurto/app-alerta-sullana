@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.example.alertasullana.R
 import com.example.alertasullana.data.repository.FirebaseRepository
 import com.example.alertasullana.data.repository.UsuarioRepository
-import com.example.alertasullana.ui.registro.RegistroUsuarioActivity
+import com.example.alertasullana.ui.splash.IntroActivity
 import com.example.alertasullana.ui.viewmodel.PerfilViewModel
 import com.example.alertasullana.ui.viewmodel.PerfilViewModelFactory
 
@@ -79,7 +79,7 @@ class PerfilFragment : Fragment() {
         perfilViewModel.navegarARegistro.observe(viewLifecycleOwner) { navegar ->
             if (navegar) {
                 // Navegar a la actividad de registro
-                val intent = Intent(activity, RegistroUsuarioActivity::class.java)
+                val intent = Intent(activity, IntroActivity::class.java)
                 startActivity(intent)
                 // Limpiar la pila de actividades para que el usuario no pueda volver atrás
                 requireActivity().finishAffinity()
