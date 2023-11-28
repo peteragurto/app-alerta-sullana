@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!--Ubicacion-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <!--Camara-->
     <uses-permission android:name="android.permission.CAMERA" />
     <!--Memoria externa-->

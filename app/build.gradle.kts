@@ -62,11 +62,11 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
     // LiveData
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
-    // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.okhttp3:okhttp:4.9.1")
-
+    // Corrutinas
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+    implementation("androidx.lifecycle:lifecycle-runtime:2.6.1")
+    //Location
+    implementation("com.google.android.gms:play-services-location:21.0.1")
 
     //Base
     implementation("androidx.core:core-ktx:1.12.0")
