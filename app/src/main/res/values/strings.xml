@@ -34,4 +34,5 @@
     <string name="descrip_imagenDelito">Aquí se cargará la imagen del delito</string>
     <string name="describe_el_delito">Describe el delito</string>
     <string name="escriba_el_delito">Escriba el delito</string>
+    <string name="descripcion_btn_ubicacion">Boton para ir a ubicacion en tiempo real\n</string>
 </resources>

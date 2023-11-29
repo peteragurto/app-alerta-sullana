@@ -59,8 +59,7 @@ class MainActivity : AppCompatActivity(), CameraResultListener {
             .addToBackStack(null)
             .commit()
     }
-
-
+    
 }
 
 

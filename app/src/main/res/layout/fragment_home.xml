@@ -13,6 +13,21 @@
         android:layout_height="match_parent"
         tools:context=".HomeFragment" />
 
+    <!--Boton Ubicacion -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_ubicacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="303dp"
+        android:backgroundTint="@color/white"
+        android:contentDescription="@string/descripcion_btn_ubicacion"
+        android:src="@drawable/marcador"
+        app:fabSize="normal"/>
+
     <!-- Boton Flotante -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
