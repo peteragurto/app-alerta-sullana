@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.alertasullana.R
+import com.example.alertasullana.data.network.ConnectivityChecker
 import com.example.alertasullana.data.services.CameraResultListener
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -32,7 +33,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener {
+class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener, ConnectivityChecker.ConnectivityChangeListener {
 
     //Instancia de mapa de Google
     private lateinit var map: GoogleMap
@@ -42,7 +43,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
     private var cameraResultListener: CameraResultListener? = null
     //Variable para saber si se ha solicitado el permiso de ubicación al menos una vez
     private var locationPermissionRequestedOnce = false
-
+    //Instancia de ConnectivityChecker
+    private val connectivityChecker: ConnectivityChecker by lazy { ConnectivityChecker(requireContext()) }
     companion object {
         //Código para permisos de ubicación
         private val LOCATION_PERMISSION_REQUEST = 1
@@ -64,22 +66,47 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         }
 
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        // Inicializa el fragmento del mapa
-        createFragment()
-        // Establece el color de fondo del fragmento
-        view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorBackgroundDark))
+
+        // Verificar la conectividad antes de realizar acciones que requieran Internet
+        if (connectivityChecker.isConnectedToInternet()) {
+            // Acciones que requieren Internet
+            // Inicializa el fragmento del mapa
+            createFragment()
+            // Establece el color de fondo del fragmento
+            view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorBackgroundDark))
+        } else {
+            // Mostrar un mensaje al usuario indicando la falta de conexión
+            Toast.makeText(requireContext(), "No hay conexión a Internet", Toast.LENGTH_SHORT).show()
+        }
 
         // Botón flotante para abrir la cámara
         val fab: FloatingActionButton = view.findViewById(R.id.fab)
         fab.setOnClickListener {
-            // Solicitar permisos de cámara
-            openCamera()
+            if (connectivityChecker.isConnectedToInternet()) {
+                // Solicitar permisos de cámara
+                openCamera()
+            } else {
+                // Mostrar un mensaje al usuario indicando la falta de conexión
+                Toast.makeText(requireContext(), "No hay conexión a Internet", Toast.LENGTH_SHORT).show()
+            }
+
         }
 
         // Botón para mostrar la ubicación actual del usuario
         val locationButton: FloatingActionButton = view.findViewById(R.id.fab_ubicacion)
         locationButton.setOnClickListener {
-            checkLocationAndGps()
+            if (connectivityChecker.isConnectedToInternet()) {
+                // Acciones que requieren Internet
+                if (!isMapFragmentInitialized()) {
+                    // Si el fragmento del mapa no está inicializado, inicialízalo
+                    createFragment()
+                }
+                // Verificar permisos de ubicación y GPS
+                checkLocationAndGps()
+            } else {
+                // Mostrar un mensaje al usuario indicando la falta de conexión
+                Toast.makeText(requireContext(), "No hay conexión a Internet", Toast.LENGTH_SHORT).show()
+            }
         }
 
         return view
@@ -97,6 +124,10 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         // Inicializar el fragmento del mapa
         val mapFragment : SupportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+    }
+    // Agrega esta función para verificar si el fragmento del mapa ya está inicializado
+    private fun isMapFragmentInitialized(): Boolean {
+        return ::map.isInitialized
     }
 
     // Callback cuando el mapa está listo para su uso
@@ -297,6 +328,18 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
             requestLocationPermission()
         }
     }
+
+    override fun onConnectivityChanged(isConnected: Boolean) {
+        if (isConnected) {
+            // Si hay conexión, inicializa el fragmento del mapa y realiza otras acciones necesarias
+            createFragment()
+            view?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorBackgroundDark))
+        } else {
+            // Si no hay conexión, muestra un mensaje al usuario
+            Toast.makeText(requireContext(), "No hay conexión a Internet", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
     //-------------------------------------------------------------------------------------------------------
     //-------------------------------------------------------------------------------------------------------
