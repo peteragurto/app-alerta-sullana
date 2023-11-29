@@ -104,6 +104,12 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         map = googleMap
         // Aplica un estilo personalizado al mapa
         map.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.estilo_oscuro))
+
+        // Configura la ubicación inicial (Piura, Perú)
+        val piuraLatLng = LatLng(-5.1945, -80.6328)
+        // Mueve la cámara del mapa a la ubicación inicial con un nivel de zoom específico
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(piuraLatLng, 8f))
+
         // Desactivar el botón de ubicación en tiempo real
         map.uiSettings.isMyLocationButtonEnabled = false
 
@@ -176,7 +182,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
                 location?.let {
                     // Si la ubicación no es nula, mueve la cámara del mapa a la ubicación actual del usuario
                     val currentLatLng = LatLng(it.latitude, it.longitude)
-                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 16f))
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17f))
                 } ?: run {
                     // Manejar el caso en el que la ubicación es nula
                     Toast.makeText(
