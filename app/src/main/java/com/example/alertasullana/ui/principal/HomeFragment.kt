@@ -82,9 +82,16 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         // Botón flotante para abrir la cámara
         val fab: FloatingActionButton = view.findViewById(R.id.fab)
         fab.setOnClickListener {
+            // Verificar la conectividad antes de realizar acciones que requieran Internet
             if (connectivityChecker.isConnectedToInternet()) {
-                // Solicitar permisos de cámara
-                openCamera()
+                // Acciones que requieren Internet
+                if(areLocationPermissionsGranted()&&isGpsEnabled()){
+                    // Si los permisos de ubicación están concedidos y el GPS está activado, abrir la cámara
+                    openCamera()
+                }else{
+                    // Si no, solicitar los permisos o habilitar el GPS según sea necesario
+                    requestLocationAndGps()
+                }
             } else {
                 // Mostrar un mensaje al usuario indicando la falta de conexión
                 Toast.makeText(requireContext(), "No hay conexión a Internet", Toast.LENGTH_SHORT).show()
