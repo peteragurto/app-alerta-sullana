@@ -1,6 +1,9 @@
 package com.example.alertasullana.ui.principal
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,36 +11,29 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.alertasullana.R
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.ByteArrayOutputStream
-import java.util.UUID
-
+import java.util.*
 
 class HacerReporteFragment : Fragment() {
     //creamos variantes donde se almacenan datos
     private lateinit var imageView: ImageView
     private lateinit var desEditText: EditText
     private lateinit var btn_subir: Button
+    private lateinit var Ubicacion: FusedLocationProviderClient
     //creamos variantes para activar servicios
     private lateinit var firestore: FirebaseFirestore
     private lateinit var storageReference: StorageReference
-
-    //Imagen cargada del anterior fragmento
-    //private var imageUri: Uri? = null
-    //Clase para recibir argumentos
-    //private val args:HacerReporteFragmentArgs by navArgs()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        //imageUri = Uri.parse(args.imageUri)
-
-
-    }
+    private var currentLocation: Location? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,20 +52,46 @@ class HacerReporteFragment : Fragment() {
         firestore = FirebaseFirestore.getInstance()
         storageReference = FirebaseStorage.getInstance().reference
 
+        //Inicia servivio de localizacion
+        Ubicacion = LocationServices.getFusedLocationProviderClient(requireActivity())
+
         // Recuperar la imagen de los argumentos
         val imageBitmap = arguments?.getParcelable<Bitmap>("image")
         imageView.setImageBitmap(imageBitmap)
 
+        // Solicitar permisos de ubicación si no están concedidos
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                LOCATION_PERMISSION_REQUEST_CODE
+            )
+        } else {
+            // Obtener la ubicación del usuario
+            getCurrentLocation()
+        }
+
         btn_subir.setOnClickListener {
+            val uid = arguments?.getString("uid")
             // Subir la imagen a Firebase Storage
             val imageUrl = SubirImg(imageBitmap)
 
             // Subir los datos a Firestore
-            SubirDatos(imageUrl)
+            SubirDatos(imageUrl, uid)
         }
 
         // Inflate the layout for this fragment
         return view
+    }
+    private fun getCurrentLocation() {
+        Ubicacion.lastLocation
+            .addOnSuccessListener { location: Location? ->
+                currentLocation = location
+            }
     }
     //subir imagen a Storage y generar id imagen
     private fun SubirImg(bitmap: Bitmap?): String {
@@ -94,15 +116,21 @@ class HacerReporteFragment : Fragment() {
         return imgNombre
     }
     //subir datos a FireStore
-    private fun SubirDatos(imageUrl: String) {
+    private fun SubirDatos(imageUrl: String, uid: String?) {
         val descripcionDelito = desEditText.text.toString()
 
         // Crear un nuevo documento en Firestore para el reporte
         val reporte = hashMapOf(
             "descripcionDelito" to descripcionDelito,
             "imageUrl" to imageUrl,
-            "fecha" to FieldValue.serverTimestamp()
-            // Puedes agregar más campos según tus necesidades
+            "fecha" to FieldValue.serverTimestamp(),
+            "ubicacion" to currentLocation?.let {
+                hashMapOf(
+                    "latitud" to it.latitude,
+                    "longitud" to it.longitude
+                )
+            },
+            "uid" to uid // Agregar el uid del usuario al documento
         )
 
         firestore.collection("reportes").add(reporte)
@@ -113,21 +141,7 @@ class HacerReporteFragment : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HacerReporteFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HacerReporteFragment().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 123
     }
+
 }

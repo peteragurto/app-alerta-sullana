@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.alertasullana.R
 import com.example.alertasullana.data.network.ConnectivityChecker
+import com.example.alertasullana.ui.principal.HacerReporteFragment
 import com.example.alertasullana.ui.principal.MainActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -79,6 +80,7 @@ class RegistroUsuarioActivity : AppCompatActivity() {
         val user = FirebaseAuth.getInstance().currentUser
         val db = FirebaseFirestore.getInstance()
 
+
         // Verificar si el usuario ya está registrado
         db.collection("usuarios").document(user?.uid ?: "").get()
             .addOnCompleteListener { task ->
@@ -89,27 +91,36 @@ class RegistroUsuarioActivity : AppCompatActivity() {
                         Toast.makeText(this, "Bienvenido de vuelta", Toast.LENGTH_SHORT).show()
                     } else {
                         // Guardar datos en Firestore
-                        saveUserDataToFirestore()
+                        saveUserDataToFirestore(user?.uid)
+                        // Luego, abrir el fragmento HacerReporteFragment y pasar el uid
+                        val hacerReporteFragment = HacerReporteFragment()
+                        val bundle = Bundle()
+                        bundle.putString("uid", user?.uid)
+                        hacerReporteFragment.arguments = bundle
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, hacerReporteFragment)
+                            .addToBackStack(null)
+                            .commit()
                     }
                 } else {
                     Toast.makeText(this, "Error al verificar usuario en Firestore", Toast.LENGTH_SHORT).show()
                 }
             }
     }
-    private fun saveUserDataToFirestore() {
+    private fun saveUserDataToFirestore(uid: String?) {
         val user = FirebaseAuth.getInstance().currentUser
         val db = FirebaseFirestore.getInstance()
 
         // Crear un objeto con los datos que deseas almacenar
         val userData = hashMapOf(
-            "uid" to user?.uid,
+            "uid" to uid,
             "nombre" to user?.displayName,
             "correo" to user?.email,
             "fechaRegistro" to FieldValue.serverTimestamp()
         )
 
         // Agregar datos a Firestore
-        db.collection("usuarios").document(user?.uid ?: "").set(userData)
+        db.collection("usuarios").document(uid ?: "").set(userData)
             .addOnSuccessListener {
                 // Éxito al guardar en Firestore
                 Toast.makeText(this, "Usuario registrado", Toast.LENGTH_SHORT).show()
