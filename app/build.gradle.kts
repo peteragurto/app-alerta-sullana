@@ -52,6 +52,7 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
     implementation("com.google.firebase:firebase-firestore:24.9.1")
+    implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
 
     // Testing Fragments in Isolation
     debugImplementation("androidx.fragment:fragment-testing:1.5.5")
