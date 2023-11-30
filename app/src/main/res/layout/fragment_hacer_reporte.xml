@@ -15,10 +15,10 @@
             android:background="@color/white"
             android:id="@+id/imagen_delito"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="50dp"
-            android:layout_marginStart="50dp"
+            android:layout_height="320dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginStart="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginStart="50dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -37,38 +37,70 @@
             app:layout_constraintTop_toBottomOf="@+id/imagen_delito"
 
             android:text="@string/describe_el_delito"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/botonesintro"
             android:alpha="0.5"/>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/label_Descripcion_delito"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descripciondelito"
+            app:boxStrokeColor="@color/white"
+            app:hintTextColor="@color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txt_Descripcion_Delito"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/escriba_el_delito"
+                android:textColorHint="@color/grey"
+                android:textColor="@color/white"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@id/datosextradelito"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="50dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/descripciondelito">
+            app:layout_constraintTop_toBottomOf="@+id/label_Descripcion_delito"
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txt_Descripcion_Delito"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/escriba_el_delito" />
+            android:text="@string/datos_extra"
+            android:textSize="18sp"
+            android:textStyle="normal"
+            android:textColor="@color/white"
+            android:alpha="0.5"/>
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_reporte"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="160dp"
-            android:layout_marginTop="536dp"
-            android:text="Subir"
+            android:layout_marginTop="30dp"
+            android:text="@string/reportar_delito"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+
+
+            app:backgroundTint="#EA1D00"
+            app:icon="@drawable/baseline_campaign_24"
+            app:iconGravity="end"
+            app:iconPadding="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/datosextradelito" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
