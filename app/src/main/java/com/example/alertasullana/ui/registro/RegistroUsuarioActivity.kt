@@ -86,7 +86,7 @@ class RegistroUsuarioActivity : AppCompatActivity() {
                     val document: DocumentSnapshot? = task.result
                     if (document != null && document.exists()) {
                         // El usuario ya está registrado
-                        Toast.makeText(this, "Usuario ya registrado", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Bienvenido de vuelta", Toast.LENGTH_SHORT).show()
                     } else {
                         // Guardar datos en Firestore
                         saveUserDataToFirestore()
@@ -112,11 +112,11 @@ class RegistroUsuarioActivity : AppCompatActivity() {
         db.collection("usuarios").document(user?.uid ?: "").set(userData)
             .addOnSuccessListener {
                 // Éxito al guardar en Firestore
-                Toast.makeText(this, "Datos guardados en Firestore", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Usuario registrado", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { e ->
                 // Error al guardar en Firestore
-                Toast.makeText(this, "Error al guardar en Firestore: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Error al registrarse: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 }
