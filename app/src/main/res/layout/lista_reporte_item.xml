@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/list_item_reporte.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@color/Oscurito"
+    android:padding="16dp">
+
+    <!-- Imagen del delito -->
+    <ImageView
+        android:id="@+id/imageViewDelito"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/googleicon" />
+
+    <!-- Detalles del delito -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="16dp"
+        android:orientation="vertical">
+
+        <!-- Título del delito -->
+        <TextView
+            android:id="@+id/textViewTituloDelito"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:text="Título del Delito" />
+
+        <!-- Otras detalles del delito (puedes agregar más aquí) -->
+        <TextView
+            android:id="@+id/textFechaDelito"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fecha del delito"
+            android:textColor="@color/white"
+            android:alpha="0.5"/>
+
+    </LinearLayout>
+</LinearLayout>
