@@ -1,6 +1,9 @@
 package com.example.alertasullana.ui.principal
 
 import android.Manifest
+import android.app.AlertDialog
+import android.app.ProgressDialog
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.location.Location
@@ -17,6 +20,7 @@ import androidx.fragment.app.Fragment
 import com.example.alertasullana.R
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -35,6 +39,9 @@ class HacerReporteFragment : Fragment() {
     private lateinit var storageReference: StorageReference
     private var currentLocation: Location? = null
 
+    //creamos variable para almacenar el uid del usuario
+    private lateinit var uid: String
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,9 +55,16 @@ class HacerReporteFragment : Fragment() {
         //button
         btn_subir= view.findViewById(R.id.btn_reporte)
 
-        // Inicializar Firebase
+        // Inicializar Firebase(Referencias de Firestore y Storage)
         firestore = FirebaseFirestore.getInstance()
         storageReference = FirebaseStorage.getInstance().reference
+
+        //======================================================================================
+        // Obtener la instancia de FirebaseAuth
+        val auth = FirebaseAuth.getInstance()
+        // Obtener el UID del usuario actual
+        uid = auth.currentUser?.uid ?: ""
+        //======================================================================================
 
         //Inicia servivio de localizacion
         Ubicacion = LocationServices.getFusedLocationProviderClient(requireActivity())
@@ -59,6 +73,7 @@ class HacerReporteFragment : Fragment() {
         val imageBitmap = arguments?.getParcelable<Bitmap>("image")
         imageView.setImageBitmap(imageBitmap)
 
+        //======================================================================================
         // Solicitar permisos de ubicación si no están concedidos
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
@@ -75,11 +90,10 @@ class HacerReporteFragment : Fragment() {
             getCurrentLocation()
         }
 
+        //Boton para subir datos
         btn_subir.setOnClickListener {
-            val uid = arguments?.getString("uid")
             // Subir la imagen a Firebase Storage
             val imageUrl = SubirImg(imageBitmap)
-
             // Subir los datos a Firestore
             SubirDatos(imageUrl, uid)
         }
@@ -115,9 +129,16 @@ class HacerReporteFragment : Fragment() {
 
         return imgNombre
     }
-    //subir datos a FireStore
+
+    //Método para subir datos a FireStore
     private fun SubirDatos(imageUrl: String, uid: String?) {
         val descripcionDelito = desEditText.text.toString()
+
+        // Crear un ProgressDialog para mostrar el progreso de la carga
+        val progressDialog = ProgressDialog(requireContext())
+        progressDialog.setMessage("Subiendo reporte...")
+        progressDialog.setCancelable(false)
+        progressDialog.show()
 
         // Crear un nuevo documento en Firestore para el reporte
         val reporte = hashMapOf(
@@ -130,14 +151,70 @@ class HacerReporteFragment : Fragment() {
                     "longitud" to it.longitude
                 )
             },
-            "uid" to uid // Agregar el uid del usuario al documento
+            "uid" to this.uid // Agregar el uid del usuario al documento
         )
 
         firestore.collection("reportes").add(reporte)
             .addOnSuccessListener {
+                // Ocultar el ProgressDialog en caso de éxito
+                progressDialog.dismiss()
+
+                // Mostrar un AlertDialog de éxito
+                MostrarDialogExito("Éxito", "Reporte subido correctamente.") {
+                    // Manejar la acción después del éxito (por ejemplo, ir a MainActivity)
+                    // Puedes poner aquí el código para ir a la actividad principal
+                    // o simplemente cerrar el fragmento
+                    requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
+                }
             }
             .addOnFailureListener { e ->
+                // Ocultar el ProgressDialog en caso de fallo
+                progressDialog.dismiss()
+
+                // Mostrar un AlertDialog de fallo
+                MostrarDialogError("Error", "No se pudo subir el reporte. ¿Deseas intentar de nuevo?") {
+                    // Manejar la acción después del fallo (por ejemplo, reintentar o cerrar el fragmento)
+                    // Puedes poner aquí el código para manejar las opciones después del fallo
+                }
             }
+    }
+
+    // Función para mostrar un AlertDialog de fallo
+    private fun MostrarDialogError(titulo: String, mensaje: String, accion: () -> Unit) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(titulo)
+            .setMessage(mensaje)
+            .setPositiveButton("Sí") { dialog, _ ->
+                // Ejecutar la acción si el usuario selecciona "Sí"
+                accion.invoke()
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancelar") { dialog, _ ->
+                // Iniciar la MainActivity si el usuario selecciona "Cancelar"
+                val intent = Intent(requireContext(), MainActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish() // Opcional: cerrar la actividad actual
+                dialog.dismiss()
+
+            }
+            .create()
+            .show()
+    }
+
+    // Función para mostrar un AlertDialog de éxito
+    private fun MostrarDialogExito(titulo: String, mensaje: String, accion: () -> Unit) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(titulo)
+            .setMessage(mensaje)
+            .setPositiveButton("Continuar") { dialog, _ ->
+                // Iniciar la MainActivity después del éxito
+                val intent = Intent(requireContext(), MainActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish() // Opcional: cerrar la actividad actual
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
 
     companion object {

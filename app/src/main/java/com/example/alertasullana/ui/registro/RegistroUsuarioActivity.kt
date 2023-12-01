@@ -69,13 +69,16 @@ class RegistroUsuarioActivity : AppCompatActivity() {
         }
     }
 
+    // Función llamada cuando la actividad se inicia
     override fun onStart() {
         super.onStart()
+        // Verificar si el usuario ya inició sesión
         if(FirebaseAuth.getInstance().currentUser != null){
             val i  = Intent(this, MainActivity::class.java)
             startActivity(i)
         }
     }
+    // Función para verificar si el usuario ya está registrado en Firestore
     private fun comprobacionUsuario() {
         val user = FirebaseAuth.getInstance().currentUser
         val db = FirebaseFirestore.getInstance()
@@ -92,21 +95,15 @@ class RegistroUsuarioActivity : AppCompatActivity() {
                     } else {
                         // Guardar datos en Firestore
                         saveUserDataToFirestore(user?.uid)
-                        // Luego, abrir el fragmento HacerReporteFragment y pasar el uid
-                        val hacerReporteFragment = HacerReporteFragment()
-                        val bundle = Bundle()
-                        bundle.putString("uid", user?.uid)
-                        hacerReporteFragment.arguments = bundle
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, hacerReporteFragment)
-                            .addToBackStack(null)
-                            .commit()
+
                     }
                 } else {
                     Toast.makeText(this, "Error al verificar usuario en Firestore", Toast.LENGTH_SHORT).show()
                 }
             }
     }
+
+    // Función para guardar los datos del usuario en Firestore por primera vez
     private fun saveUserDataToFirestore(uid: String?) {
         val user = FirebaseAuth.getInstance().currentUser
         val db = FirebaseFirestore.getInstance()
