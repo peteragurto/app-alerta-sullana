@@ -1,5 +1,7 @@
 package com.example.alertasullana.ui.principal
 
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,6 +19,7 @@ import com.example.alertasullana.data.repository.UsuarioRepository
 import com.example.alertasullana.ui.splash.IntroActivity
 import com.example.alertasullana.ui.viewmodel.PerfilViewModel
 import com.example.alertasullana.ui.viewmodel.PerfilViewModelFactory
+import com.google.android.material.materialswitch.MaterialSwitch
 
 
 class PerfilFragment : Fragment() {
@@ -38,6 +41,18 @@ class PerfilFragment : Fragment() {
 
         // Crear el repositorio de usuario
         val usuarioRepository = UsuarioRepository(requireContext()) // Puedes ajustar esto según tus necesidades
+
+        //SWITCH-------------------------------------------------------------------------
+        // En tu Fragment o Activity, obtén las preferencias compartidas
+        val sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
+
+        // Obtén el estado actual del switch desde las preferencias compartidas
+        val switchState = sharedPreferences.getBoolean("switchState", true)
+
+        // Asigna el estado al MaterialSwitch
+        val switchNotificaciones = view.findViewById<MaterialSwitch>(R.id.sw_notificaciones)
+        switchNotificaciones.isChecked = switchState
+        //SWITCH-------------------------------------------------------------------------
 
 
         //-------------------------------------------------------RECUPERACIÓN DE DATOS DE USUARIO
@@ -80,6 +95,38 @@ class PerfilFragment : Fragment() {
             perfilViewModel.cerrarSesionYNavegarARegistro()
         }
         //-----------------------------------------CERRAR SESION Y NAVEGAR A REGISTRO
+
+
+        //SWITCH FUNCIONALIDAD------------------------------------------------------------
+        // Agrega un Listener para el cambio de estado del switch
+        switchNotificaciones.setOnCheckedChangeListener { _, isChecked ->
+            // Mostrar AlertDialog para confirmar la acción
+            val message = if (isChecked) "¿Desea activar las notificaciones?" else "¿Desea desactivar las notificaciones?"
+
+            AlertDialog.Builder(requireContext())
+                .setMessage(message)
+                .setPositiveButton("Sí") { _, _ ->
+                    // Usuario hizo clic en "Sí", guardar el nuevo estado y realizar acciones
+                    with(sharedPreferences.edit()) {
+                        putBoolean("switchState", isChecked)
+                        apply()
+                    }
+
+                    // Realizar acciones según el estado del switch
+                    if (isChecked) {
+                        // El switch está activado, permite las notificaciones
+                        // ... Código para activar las notificaciones ...
+                    } else {
+                        // El switch está desactivado, desactiva las notificaciones
+                        // ... Código para desactivar las notificaciones ...
+                    }
+                }
+                .setNegativeButton("No") { _, _ ->
+                    // Usuario hizo clic en "No", restaurar el estado anterior del switch
+                    switchNotificaciones.isChecked = !isChecked
+                }
+                .show()
+        }
 
 
         return view
