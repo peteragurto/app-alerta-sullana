@@ -19,11 +19,6 @@ import com.example.alertasullana.ui.viewmodel.PerfilViewModel
 import com.example.alertasullana.ui.viewmodel.PerfilViewModelFactory
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [PerfilFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class PerfilFragment : Fragment() {
 
     //Importando ViewModel de Perfil
@@ -40,10 +35,6 @@ class PerfilFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_perfil, container, false)
-
-        // Obtener referencias
-        val btnSalir = view.findViewById<Button>(R.id.btn_salirPerfil)//Minimizar perfil
-        val btnCerrarSesion = view.findViewById<Button>(R.id.btnSalirApp)//Cerrar sesión
 
         // Crear el repositorio de usuario
         val usuarioRepository = UsuarioRepository(requireContext()) // Puedes ajustar esto según tus necesidades
@@ -95,14 +86,6 @@ class PerfilFragment : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PerfilFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+
     }
 }
