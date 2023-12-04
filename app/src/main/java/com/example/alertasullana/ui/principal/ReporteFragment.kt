@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.alertasullana.R
 import com.example.alertasullana.data.model.Reporte
+import com.example.alertasullana.ui.viewmodel.MapSheet
 import com.example.alertasullana.ui.viewmodel.ReporteViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -54,6 +55,10 @@ class ReporteFragment : Fragment() {
             // Aquí puedes manejar el clic en un reporte específico si es necesario
             val reporteSeleccionado = reporteListAdapter.getItem(position)
             // Puedes abrir un nuevo fragmento o actividad para mostrar los detalles del reporte
+            // Crea y muestra el BottomSheet
+            val bottomSheet = MapSheet.newInstance(reporteSeleccionado?.latitud ?: 0.0, reporteSeleccionado?.longitud ?: 0.0)
+            bottomSheet.show(parentFragmentManager, bottomSheet.tag)
+
         })
 
         return view
