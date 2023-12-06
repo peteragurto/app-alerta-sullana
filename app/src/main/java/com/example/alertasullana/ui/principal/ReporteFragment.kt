@@ -2,6 +2,7 @@ package com.example.alertasullana.ui.principal
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,6 +65,7 @@ class ReporteFragment : Fragment() {
     }
     private fun mostrarBottomSheet(reporte: Reporte?) {
         reporte?.let {
+            Log.d("BottomSheet", "Descripcion: ${reporte.descripcionDelito}, Fecha: ${reporte.fecha}, Bitmap: ${reporte.bitmap}")
             val bottomSheetFragment = MapSheet.newInstance(reporte.descripcionDelito, reporte.fecha, reporte.bitmap)
             bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
         }

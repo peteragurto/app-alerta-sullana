@@ -2,6 +2,7 @@ package com.example.alertasullana.ui.viewmodel
 
 import android.graphics.Bitmap  // Importante agregar esta línea
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+@Suppress("UNREACHABLE_CODE")
 class MapSheet : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,6 +26,8 @@ class MapSheet : BottomSheetDialogFragment() {
         val descripcion = arguments?.getString("descripcion", "")
         val fecha = arguments?.getSerializable("fecha") as Date?
         val bitmap = arguments?.getParcelable("bitmap") as Bitmap?
+
+        Log.d("MapSheet", "Descripcion: $descripcion, Fecha: $fecha, Bitmap: $bitmap")
 
         val tituloTextView: TextView? = view?.findViewById(R.id.tituloTextView)
         val imgMarcador: ImageView? = view?.findViewById(R.id.imgMarcador)
