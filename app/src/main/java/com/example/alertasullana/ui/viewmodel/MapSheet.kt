@@ -1,77 +1,53 @@
 package com.example.alertasullana.ui.viewmodel
 
+import android.graphics.Bitmap  // Importante agregar esta línea
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import com.example.alertasullana.R
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapView
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
-class MapSheet : BottomSheetDialogFragment(), OnMapReadyCallback {
+class MapSheet : BottomSheetDialogFragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_map_sheet, container, false)
+        // Obtener datos del Bundle
+        val descripcion = arguments?.getString("descripcion", "")
+        val fecha = arguments?.getSerializable("fecha") as Date?
+        val bitmap = arguments?.getParcelable("bitmap") as Bitmap?
 
-    private lateinit var mapView: MapView
-    private var latitude: Double = 0.0
-    private var longitude: Double = 0.0
+        val tituloTextView: TextView? = view?.findViewById(R.id.tituloTextView)
+        val imgMarcador: ImageView? = view?.findViewById(R.id.imgMarcador)
+        val fechaSheet: TextView? = view?.findViewById(R.id.fecha_sheet)
+        val descripcionSheet: TextView? = view?.findViewById(R.id.descripcion_sheet)
 
+        tituloTextView?.text = descripcion
+        imgMarcador?.setImageBitmap(bitmap)
+        fechaSheet?.text = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(fecha)
+        descripcionSheet?.text = descripcion
+
+        return view
+    }
     companion object {
-        private const val ARG_LATITUDE = "latitude"
-        private const val ARG_LONGITUDE = "longitude"
-
-        fun newInstance(latitude: Double, longitude: Double): MapSheet {
-            val fragment = MapSheet()
+        fun newInstance(descripcion: String, fecha: Date, bitmap: Bitmap?): MapSheet {
             val args = Bundle()
-            args.putDouble(ARG_LATITUDE, latitude)
-            args.putDouble(ARG_LONGITUDE, longitude)
+            args.putString("descripcion", descripcion)
+            args.putSerializable("fecha", fecha)
+            args.putParcelable("bitmap", bitmap)
+            val fragment = MapSheet()
             fragment.arguments = args
             return fragment
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_map_sheet, container, false)
-
-        mapView = view.findViewById(R.id.mapView)
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
-
-        return view
-    }
-
-    override fun onMapReady(googleMap: GoogleMap) {
-        // Configura el mapa con la ubicación del reporte
-        val location = LatLng(latitude, longitude)
-        googleMap.addMarker(MarkerOptions().position(location).title("Ubicación del Reporte"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mapView.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        mapView.onPause()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mapView.onDestroy()
-    }
-
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
-    }
 }
-
 

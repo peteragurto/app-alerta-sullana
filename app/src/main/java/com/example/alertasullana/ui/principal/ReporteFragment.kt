@@ -56,15 +56,20 @@ class ReporteFragment : Fragment() {
             val reporteSeleccionado = reporteListAdapter.getItem(position)
             // Puedes abrir un nuevo fragmento o actividad para mostrar los detalles del reporte
             // Crea y muestra el BottomSheet
-            val bottomSheet = MapSheet.newInstance(reporteSeleccionado?.latitud ?: 0.0, reporteSeleccionado?.longitud ?: 0.0)
-            bottomSheet.show(parentFragmentManager, bottomSheet.tag)
+            mostrarBottomSheet(reporteSeleccionado)
 
         })
 
         return view
     }
-
+    private fun mostrarBottomSheet(reporte: Reporte?) {
+        reporte?.let {
+            val bottomSheetFragment = MapSheet.newInstance(reporte.descripcionDelito, reporte.fecha, reporte.bitmap)
+            bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
+        }
+    }
 }
+
 
 class ReporteListAdapter(context: Context, resource: Int, objects: List<Reporte>) :
 
