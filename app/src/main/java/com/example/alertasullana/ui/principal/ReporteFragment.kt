@@ -2,7 +2,7 @@ package com.example.alertasullana.ui.principal
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.example.alertasullana.R
 import com.example.alertasullana.data.model.Reporte
 import com.example.alertasullana.ui.viewmodel.MapSheet
+
 import com.example.alertasullana.ui.viewmodel.ReporteViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -51,26 +52,26 @@ class ReporteFragment : Fragment() {
         // Cargar los reportes desde Firestore
         reporteViewModel.cargarReportes()
 
-        // Agregar un listener al ListView para manejar clics en los reportes
         listViewReportes.setOnItemClickListener(AdapterView.OnItemClickListener { _, _, position, _ ->
-            // Aquí puedes manejar el clic en un reporte específico si es necesario
+            // Obtener el reporte seleccionado
             val reporteSeleccionado = reporteListAdapter.getItem(position)
-            // Puedes abrir un nuevo fragmento o actividad para mostrar los detalles del reporte
-            // Crea y muestra el BottomSheet
-            mostrarBottomSheet(reporteSeleccionado)
 
+            // Llamar a cargarReportePorId en el ViewModel
+            reporteViewModel.cargarReportePorId(reporteSeleccionado?.userId ?: "")
+
+            // Mostrar el MapSheet
+            mostrarMapSheet()
         })
 
         return view
     }
-    private fun mostrarBottomSheet(reporte: Reporte?) {
-        reporte?.let {
-            Log.d("BottomSheet", "Descripcion: ${reporte.descripcionDelito}, Fecha: ${reporte.fecha}, Bitmap: ${reporte.bitmap}")
-            val bottomSheetFragment = MapSheet.newInstance(reporte.descripcionDelito, reporte.fecha, reporte.bitmap)
-            bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
-        }
+    private fun mostrarMapSheet() {
+        val mapSheet = MapSheet()
+        mapSheet.show(parentFragmentManager, mapSheet.tag)
     }
+
 }
+
 
 
 class ReporteListAdapter(context: Context, resource: Int, objects: List<Reporte>) :
