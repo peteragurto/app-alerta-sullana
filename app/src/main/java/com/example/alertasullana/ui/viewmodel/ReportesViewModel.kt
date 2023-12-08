@@ -62,38 +62,5 @@ class ReporteViewModel : ViewModel() {
         }
     }
 
-    fun cargarReportePorId(reporteId: String) {
-        // Obtener la referencia del documento específico en Firestore
-        db.collection("reportes").document(reporteId)
-            .get()
-            .addOnSuccessListener { documentSnapshot -> procesarReporte(documentSnapshot) }
-            .addOnFailureListener { e -> /* Manejar error */ }
-    }
-
-    private fun procesarReporte(documentSnapshot: DocumentSnapshot?) {
-        documentSnapshot?.let {
-            val descripcionDelito = it.getString("descripcionDelito") ?: ""
-            val fecha = it.getDate("fecha") ?: Date()
-            val imageUrl = it.getString("imageUrl") ?: ""
-            val latitud = it.getDouble("ubicacion.latitud") ?: 0.0
-            val longitud = it.getDouble("ubicacion.longitud") ?: 0.0
-            val userId = it.getString("uid") ?: ""
-
-            // Obtener la imagen desde Firebase Storage
-            val storageRef: StorageReference = storage.reference.child("images/$imageUrl")
-            storageRef.getBytes(Long.MAX_VALUE)
-                .addOnSuccessListener { bytes ->
-                    // Convertir bytes a bitmap o cualquier otra representación según tu necesidad
-                    // Puedes utilizar la biblioteca Glide para cargar imágenes directamente en ImageView
-                    val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-
-                    // Crear el objeto Reporte
-                    val reporte = Reporte(descripcionDelito, fecha, imageUrl, latitud, longitud, userId, bitmap)
-
-                }
-                .addOnFailureListener { e -> /* Manejar error de descarga de imagen */ }
-        }
-    }
-
 
 }

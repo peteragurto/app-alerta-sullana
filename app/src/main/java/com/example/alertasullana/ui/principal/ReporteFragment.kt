@@ -56,18 +56,8 @@ class ReporteFragment : Fragment() {
             // Obtener el reporte seleccionado
             val reporteSeleccionado = reporteListAdapter.getItem(position)
 
-            // Llamar a cargarReportePorId en el ViewModel
-            reporteViewModel.cargarReportePorId(reporteSeleccionado?.userId ?: "")
-
-            // Mostrar el MapSheet
-            mostrarMapSheet()
         })
-
         return view
-    }
-    private fun mostrarMapSheet() {
-        val mapSheet = MapSheet()
-        mapSheet.show(parentFragmentManager, mapSheet.tag)
     }
 
 }
