@@ -51,6 +51,7 @@ dependencies {
     //Navegación
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
+    //Firebase Storage y Firestore
     implementation("com.google.firebase:firebase-firestore:24.9.1")
     implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
 
@@ -88,9 +89,10 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx:22.2.0")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
     //Mapa Dependencias
-    implementation("com.google.android.gms:play-services-maps:18.1.0")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
     //Biblioteca GLide
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.github.bumptech.glide:annotations:4.16.0")
 
 
 }

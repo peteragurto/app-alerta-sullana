@@ -12,6 +12,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,9 +21,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.alertasullana.R
 import com.example.alertasullana.data.network.ConnectivityChecker
 import com.example.alertasullana.data.services.CameraResultListener
+import com.example.alertasullana.ui.viewmodel.MarcadorViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -31,6 +34,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener, ConnectivityChecker.ConnectivityChangeListener {
@@ -45,6 +49,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
     private var locationPermissionRequestedOnce = false
     //Instancia de ConnectivityChecker
     private val connectivityChecker: ConnectivityChecker by lazy { ConnectivityChecker(requireContext()) }
+    //Instancia de MarcadorViewModel
+    private lateinit var marcadorViewModel: MarcadorViewModel
     companion object {
         //Código para permisos de ubicación
         private val LOCATION_PERMISSION_REQUEST = 1
@@ -78,6 +84,19 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
             // Mostrar un mensaje al usuario indicando la falta de conexión
             Toast.makeText(requireContext(), "No hay conexión a Internet", Toast.LENGTH_SHORT).show()
         }
+        // Inicializar el ViewModel
+        marcadorViewModel = ViewModelProvider(this).get(MarcadorViewModel::class.java)
+
+        // Observar los marcadores y actualizar el mapa cuando cambien
+        marcadorViewModel.marcadores.observe(viewLifecycleOwner, { marcadores ->
+            // Actualizar el mapa con los nuevos marcadores
+            // (debes implementar la lógica para actualizar tu mapa aquí)
+            actualizarMapaConMarcadores(marcadores)
+        })
+
+        // Cargar los reportes (esto debería disparar automáticamente la actualización de los marcadores)
+        marcadorViewModel.cargarReportes()
+
 
         // Botón flotante para abrir la cámara
         val fab: FloatingActionButton = view.findViewById(R.id.fab)
@@ -160,6 +179,20 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         }
         // Configura escuchadores de eventos en el mapa
         map.setOnMapClickListener(this)
+    }
+
+    private fun actualizarMapaConMarcadores(marcadores: List<MarkerOptions>) {
+        Log.d("HomeFragment", "Actualizando mapa con ${marcadores.size} marcadores")
+
+        if (::map.isInitialized) {
+            // Borrar los marcadores existentes en el mapa
+            map.clear()
+
+            // Agregar los nuevos marcadores al mapa
+            for (marcador in marcadores) {
+                map.addMarker(marcador)
+            }
+        }
     }
 
     // Verifica si los permisos de ubicación están concedidos y si el GPS está activado
