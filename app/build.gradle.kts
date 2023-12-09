@@ -54,6 +54,8 @@ dependencies {
     //Firebase Storage y Firestore
     implementation("com.google.firebase:firebase-firestore:24.9.1")
     implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
+    //Cloud Messaging
+    implementation("com.google.firebase:firebase-messaging-ktx:23.4.0")
 
     // Testing Fragments in Isolation
     debugImplementation("androidx.fragment:fragment-testing:1.5.5")

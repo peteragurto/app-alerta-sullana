@@ -14,6 +14,15 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <!--Verificar conexion-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--Mensajeria de Firebase-->
+    <service
+        android:name=".java.MyFirebaseMessagingService"
+        android:exported="false"
+        tools:ignore="WrongManifestParent">
+        <intent-filter>
+            <action android:name="com.google.firebase.MESSAGING_EVENT" />
+        </intent-filter>
+    </service>
 
     <uses-feature
         android:name="android.hardware.telephony"
