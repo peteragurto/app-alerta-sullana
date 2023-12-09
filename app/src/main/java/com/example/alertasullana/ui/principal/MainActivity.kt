@@ -1,7 +1,11 @@
 package com.example.alertasullana.ui.principal
 
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -17,9 +21,26 @@ class MainActivity : AppCompatActivity(), CameraResultListener {
     private lateinit var bottomNavigationView: BottomNavigationView
     //Controlador de navegacion
     private lateinit var navController: NavController
+    companion object {
+        const val CHANNEL_ID = "channel_id"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Crear el canal de notificaciones
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.channel_name)
+            val descriptionText = getString(R.string.channel_description)
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+        //Suscribirse al tópico de notificaciones
         val firebaseMessaging = FirebaseMessaging.getInstance()
         firebaseMessaging.subscribeToTopic("new_report")
         //Objetos

@@ -14,15 +14,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <!--Verificar conexion-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!--Mensajeria de Firebase-->
-    <service
-        android:name=".MyFirebaseMessagingService"
-        android:exported="false"
-        tools:ignore="WrongManifestParent">
-        <intent-filter>
-            <action android:name="com.google.firebase.MESSAGING_EVENT" />
-        </intent-filter>
-    </service>
 
     <uses-feature
         android:name="android.hardware.telephony"
@@ -41,6 +32,15 @@
         android:supportsRtl="true"
         android:theme="@style/Base.Theme.AlertaSullana"
         tools:targetApi="31" >
+
+        <!--Mensajeria de Firebase-->
+        <service
+            android:name=".data.services.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

@@ -19,6 +19,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -106,7 +107,27 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
                 // Acciones que requieren Internet
                 if(areLocationPermissionsGranted()&&isGpsEnabled()){
                     // Si los permisos de ubicación están concedidos y el GPS está activado, abrir la cámara
-                    openCamera()
+                    if (areNotificationsEnabled()) {
+                        // Continuar con la lógica de la cámara
+                        openCamera()
+                    } else {
+                        // Mostrar un diálogo al usuario
+                        AlertDialog.Builder(requireContext())
+                            .setTitle("Habilitar notificaciones")
+                            .setMessage("Para recibir notificaciones, por favor, habilita las notificaciones para esta aplicación.")
+                            .setPositiveButton("Ir a configuración") { _, _ ->
+                                val intent = Intent().apply {
+                                    action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
+                                    putExtra(Settings.EXTRA_APP_PACKAGE, requireContext().packageName)
+                                }
+                                startActivity(intent)
+                            }
+                            .setNegativeButton("Cancelar") { dialog, _ ->
+                                dialog.dismiss()
+                            }
+                            .create()
+                            .show()
+                    }
                 }else{
                     // Si no, solicitar los permisos o habilitar el GPS según sea necesario
                     requestLocationAndGps()
@@ -428,6 +449,11 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
     //-------------------------------------------------------------------------------------------------------
     //-------------------------------------------------------------------------------------------------------
     //FUNCIONES PARA LA CÁMARA
+
+    private fun areNotificationsEnabled(): Boolean {
+        val notificationManager = NotificationManagerCompat.from(requireContext())
+        return notificationManager.areNotificationsEnabled()
+    }
 
     //FUNCIONES PARA LOS PERMISOS
     override fun onRequestPermissionsResult(

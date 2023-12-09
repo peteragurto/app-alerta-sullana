@@ -37,4 +37,7 @@
     <string name="descripcion_btn_ubicacion">Boton para ir a ubicacion en tiempo real\n</string>
     <string name="reportar_delito">Reportar delito</string>
     <string name="datos_extra">Se guardarán datos de ubicación, tiempo y usuario</string>
+
+    <string name="channel_name">Alertas de Reportes</string>
+    <string name="channel_description">Notificaciones sobre nuevos reportes en Alerta Sullana</string>
 </resources>
