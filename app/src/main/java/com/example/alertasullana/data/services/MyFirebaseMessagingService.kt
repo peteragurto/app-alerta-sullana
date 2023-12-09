@@ -16,13 +16,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
 
-        // Obtener el ID del reporte del mensaje
-        val reporteId = remoteMessage.data["reporteId"]
-
         // Crear un Intent para iniciar MainActivity
         val intent = Intent(this, MainActivity::class.java).apply {
-            // Pasar el ID del reporte como un extra
-            putExtra("reporteId", reporteId)
             // Configurar la bandera para iniciar una nueva tarea
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
