@@ -1,6 +1,9 @@
 package com.example.alertasullana.data.services
+import android.Manifest
 import android.app.PendingIntent
 import android.content.Intent
+import android.content.pm.PackageManager
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.alertasullana.R
@@ -38,6 +41,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .build()
 
         // Mostrar la notificación
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
         NotificationManagerCompat.from(this).notify(NOTIFICATION_ID, notification)
     }
 

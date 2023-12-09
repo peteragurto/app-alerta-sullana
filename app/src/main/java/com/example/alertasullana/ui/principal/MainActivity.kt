@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import com.example.alertasullana.R
 import com.example.alertasullana.data.services.CameraResultListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.messaging.FirebaseMessaging
 
 
 class MainActivity : AppCompatActivity(), CameraResultListener {
@@ -19,6 +20,8 @@ class MainActivity : AppCompatActivity(), CameraResultListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val firebaseMessaging = FirebaseMessaging.getInstance()
+        firebaseMessaging.subscribeToTopic("new_report")
         //Objetos
         bottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
