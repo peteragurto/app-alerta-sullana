@@ -21,7 +21,7 @@ class SplashActivity : AppCompatActivity() {
         Handler().postDelayed(
             {
                 verificarUsuarioAutenticado()
-            }, 1000
+            }, 500
         )
     }
 

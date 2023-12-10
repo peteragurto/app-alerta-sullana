@@ -2,7 +2,6 @@ package com.example.alertasullana.ui.principal
 
 import android.content.Context
 import android.os.Bundle
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,6 @@ import com.bumptech.glide.Glide
 import com.example.alertasullana.R
 import com.example.alertasullana.data.model.Reporte
 import com.example.alertasullana.ui.viewmodel.MapSheet
-
 import com.example.alertasullana.ui.viewmodel.ReporteViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -55,6 +53,25 @@ class ReporteFragment : Fragment() {
         listViewReportes.setOnItemClickListener(AdapterView.OnItemClickListener { _, _, position, _ ->
             // Obtener el reporte seleccionado
             val reporteSeleccionado = reporteListAdapter.getItem(position)
+
+            // Crear una instancia de MapSheet
+            val mapSheet = MapSheet()
+
+            // Crear un Bundle para pasar los datos necesarios
+            val bundle = Bundle()
+            bundle.putString("descripcionDelito", reporteSeleccionado?.descripcionDelito)
+            bundle.putLong("fecha", reporteSeleccionado?.fecha?.time ?: 0)
+            bundle.putString("imageUrl", reporteSeleccionado?.imageUrl)
+            bundle.putDouble("latitud", reporteSeleccionado?.latitud ?: 0.0)
+            bundle.putDouble("longitud", reporteSeleccionado?.longitud ?: 0.0)
+            bundle.putString("userId", reporteSeleccionado?.userId)
+            bundle.putParcelable("bitmap", reporteSeleccionado?.bitmap)
+
+            // Pasar el Bundle como argumento al MapSheet
+            mapSheet.arguments = bundle
+
+            // Mostrar el MapSheet
+            mapSheet.show(parentFragmentManager, mapSheet.tag)
 
         })
         return view

@@ -10,5 +10,5 @@ data class Reporte(
     val latitud: Double,
     val longitud: Double,
     val userId: String,
-    val bitmap: Bitmap? = null  // Opcional, solo si necesitas almacenar la imagen en memoria
+    val bitmap: Bitmap
 )

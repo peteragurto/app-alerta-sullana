@@ -2,4 +2,5 @@
 <resources>
     <item name="descripciondelito" type="id" />
     <item name="datosextradelito" type="id" />
+    <item name="boton_ver_en_mapa" type="id" />
 </resources>

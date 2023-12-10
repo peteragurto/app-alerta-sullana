@@ -3,41 +3,84 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.viewmodel.MapSheet"
     android:orientation="vertical"
     android:background="@color/Oscurito"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tituloTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Reporte"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="@color/botonesintro"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/imgMarcador"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:layout_below="@id/tituloTextView"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="16dp" />
+        <TextView
+            android:id="@+id/tituloTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reporte"
+            android:textColor="@color/botonesintro"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/fecha_sheet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imgMarcador"
-        android:layout_marginTop="16dp"
-        android:textSize="18sp" />
+        <ImageView
+            android:id="@+id/imgMarcador"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="15dp"
 
-    <TextView
-        android:id="@+id/descripcion_sheet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/fecha_sheet"
-        android:layout_marginTop="8dp"
-        android:textSize="18sp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tituloTextView" />
+
+        <TextView
+            android:id="@+id/descripcion_sheet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:paddingTop="5dp"
+            android:text="Descripcion"
+            android:textSize="12sp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgMarcador" />
+
+        <TextView
+            android:id="@+id/fecha_sheet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Fecha Delito"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/descripcion_sheet" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/boton_ver_en_mapa"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/ver_delito_en_el_mapa"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:backgroundTint="@color/BlazeOrange"
+
+
+            app:icon="@drawable/marcador"
+            app:iconGravity="end"
+            app:iconPadding="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fecha_sheet" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </LinearLayout>

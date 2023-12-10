@@ -40,4 +40,5 @@
 
     <string name="channel_name">Alertas de Reportes</string>
     <string name="channel_description">Notificaciones sobre nuevos reportes en Alerta Sullana</string>
+    <string name="ver_delito_en_el_mapa">Ver delito en el mapa</string>
 </resources>
