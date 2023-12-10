@@ -4,12 +4,14 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -27,6 +29,9 @@ class PerfilFragment : Fragment() {
     //Importando ViewModel de Perfil
     private lateinit var perfilViewModel: PerfilViewModel
 
+
+    // Declara switchNotificaciones como una propiedad de PerfilFragment
+    private lateinit var switchNotificaciones: MaterialSwitch
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -50,7 +55,7 @@ class PerfilFragment : Fragment() {
         val switchState = sharedPreferences.getBoolean("switchState", true)
 
         // Asigna el estado al MaterialSwitch
-        val switchNotificaciones = view.findViewById<MaterialSwitch>(R.id.sw_notificaciones)
+        switchNotificaciones = view.findViewById(R.id.sw_notificaciones)
         switchNotificaciones.isChecked = switchState
         //SWITCH-------------------------------------------------------------------------
 
@@ -100,36 +105,60 @@ class PerfilFragment : Fragment() {
         //SWITCH FUNCIONALIDAD------------------------------------------------------------
         // Agrega un Listener para el cambio de estado del switch
         switchNotificaciones.setOnCheckedChangeListener { _, isChecked ->
-            // Mostrar AlertDialog para confirmar la acción
-            val message = if (isChecked) "¿Desea activar las notificaciones?" else "¿Desea desactivar las notificaciones?"
+            // Solo mostrar el AlertDialog si el usuario cambió el estado del switch
+            if (switchNotificaciones.isPressed) {
+                // Mostrar AlertDialog para confirmar la acción
+                val message = if (isChecked) "¿Desea activar las notificaciones?" else "¿Desea desactivar las notificaciones?"
 
-            AlertDialog.Builder(requireContext())
-                .setMessage(message)
-                .setPositiveButton("Sí") { _, _ ->
-                    // Usuario hizo clic en "Sí", guardar el nuevo estado y realizar acciones
-                    with(sharedPreferences.edit()) {
-                        putBoolean("switchState", isChecked)
-                        apply()
-                    }
+                AlertDialog.Builder(requireContext())
+                    .setMessage(message)
+                    .setPositiveButton("Sí") { _, _ ->
+                        // Usuario hizo clic en "Sí", guardar el nuevo estado y realizar acciones
+                        with(sharedPreferences.edit()) {
+                            putBoolean("switchState", isChecked)
+                            apply()
+                        }
 
-                    // Realizar acciones según el estado del switch
-                    if (isChecked) {
-                        // El switch está activado, permite las notificaciones
-                        // ... Código para activar las notificaciones ...
-                    } else {
-                        // El switch está desactivado, desactiva las notificaciones
-                        // ... Código para desactivar las notificaciones ...
+                        // Realizar acciones según el estado del switch
+                        if (isChecked) {
+                            // El switch está activado, navegar a la configuración de notificaciones
+                            val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+                                putExtra(Settings.EXTRA_APP_PACKAGE, requireContext().packageName)
+                            }
+                            startActivity(intent)
+                        } else {
+                            // El switch está desactivado, navegar a la configuración de notificaciones
+                            val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+                                putExtra(Settings.EXTRA_APP_PACKAGE, requireContext().packageName)
+                            }
+                            startActivity(intent)
+                        }
                     }
-                }
-                .setNegativeButton("No") { _, _ ->
-                    // Usuario hizo clic en "No", restaurar el estado anterior del switch
-                    switchNotificaciones.isChecked = !isChecked
-                }
-                .show()
+                    .setNegativeButton("No") { dialog, _ ->
+                        // Usuario hizo clic en "No", restaurar el estado anterior del switch
+                        switchNotificaciones.isChecked = !isChecked
+                        // Cerrar el AlertDialog
+                        dialog.dismiss()
+                    }
+                    .show()
+            }
         }
 
 
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // Obtén una instancia de NotificationManagerCompat
+        val notificationManager = NotificationManagerCompat.from(requireContext())
+
+        // Comprueba si las notificaciones están activadas
+        val areNotificationsEnabled = notificationManager.areNotificationsEnabled()
+
+        // Actualiza el estado del switch para reflejar el estado actual de las notificaciones
+        switchNotificaciones.isChecked = areNotificationsEnabled
     }
 
     companion object {
