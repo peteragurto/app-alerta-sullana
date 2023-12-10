@@ -7,16 +7,18 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import com.example.alertasullana.R
 import com.example.alertasullana.data.services.CameraResultListener
+import com.example.alertasullana.data.services.OnMapSheetActionListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 
 
-class MainActivity : AppCompatActivity(), CameraResultListener {
+class MainActivity : AppCompatActivity(), CameraResultListener, OnMapSheetActionListener {
     //Inicializador de la barra de navegacion
     private lateinit var bottomNavigationView: BottomNavigationView
     //Controlador de navegacion
@@ -62,6 +64,7 @@ class MainActivity : AppCompatActivity(), CameraResultListener {
                 else -> false
             }
         }
+        // Seleccionar un elemento por defecto en BottomNavigationView
         replaceFragment(HomeFragment())
     }
     private fun replaceFragment(fragment: Fragment){
@@ -83,7 +86,27 @@ class MainActivity : AppCompatActivity(), CameraResultListener {
             .addToBackStack(null)
             .commit()
     }
-    
+
+    override fun onMapAction(latitud: Double, longitud: Double) {
+        Log.d("MainActivity", "onMapAction called with latitud: $latitud, longitud: $longitud")
+
+        // Crear un Bundle para pasar la latitud y la longitud
+        val bundle = Bundle()
+        bundle.putDouble("latitud", latitud)
+        bundle.putDouble("longitud", longitud)
+
+        // Crear una instancia de HomeFragment y pasar el Bundle como argumento
+        val homeFragment = HomeFragment()
+        homeFragment.arguments = bundle
+
+        // Seleccionar un elemento por defecto en BottomNavigationView
+        bottomNavigationView.selectedItemId = R.id.bottom_home
+
+        // Reemplazar el fragmento actual con HomeFragment
+        replaceFragment(homeFragment)
+
+    }
+
 }
 
 

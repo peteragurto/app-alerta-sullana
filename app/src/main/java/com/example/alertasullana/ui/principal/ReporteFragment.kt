@@ -16,13 +16,12 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.alertasullana.R
 import com.example.alertasullana.data.model.Reporte
-import com.example.alertasullana.ui.viewmodel.MapSheet
 import com.example.alertasullana.ui.viewmodel.ReporteViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class ReporteFragment : Fragment() {
+class ReporteFragment : Fragment(){
 
     // Obtener una instancia del ViewModel
     private val reporteViewModel: ReporteViewModel by viewModels()
@@ -62,16 +61,18 @@ class ReporteFragment : Fragment() {
             bundle.putString("descripcionDelito", reporteSeleccionado?.descripcionDelito)
             bundle.putLong("fecha", reporteSeleccionado?.fecha?.time ?: 0)
             bundle.putString("imageUrl", reporteSeleccionado?.imageUrl)
-            bundle.putDouble("latitud", reporteSeleccionado?.latitud ?: 0.0)
-            bundle.putDouble("longitud", reporteSeleccionado?.longitud ?: 0.0)
+            bundle.putDouble("ubicacion.latitud", reporteSeleccionado?.latitud ?: 0.0)
+            bundle.putDouble("ubicacion.longitud", reporteSeleccionado?.longitud ?: 0.0)
             bundle.putString("userId", reporteSeleccionado?.userId)
             bundle.putParcelable("bitmap", reporteSeleccionado?.bitmap)
 
             // Pasar el Bundle como argumento al MapSheet
             mapSheet.arguments = bundle
+            // Establecer MainActivity como el listener de MapSheet
+            mapSheet.listener = (activity as MainActivity)
 
             // Mostrar el MapSheet
-            mapSheet.show(parentFragmentManager, mapSheet.tag)
+            mapSheet.show(childFragmentManager, mapSheet.tag)
 
         })
         return view

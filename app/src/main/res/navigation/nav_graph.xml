@@ -20,7 +20,18 @@
         android:id="@+id/reporteFragment"
         android:name="com.example.alertasullana.ui.principal.ReporteFragment"
         android:label="fragment_reporte"
-        tools:layout="@layout/fragment_reporte" />
+        tools:layout="@layout/fragment_reporte">
+        <action
+            android:id="@+id/action_reporteFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mapSheet"
+        android:name="com.example.alertasullana.ui.principal.MapSheet"
+        android:label="fragment_map_sheet"
+        tools:layout="@layout/fragment_map_sheet">
+    </fragment>
 
     <fragment
         android:id="@+id/perfilFragment"

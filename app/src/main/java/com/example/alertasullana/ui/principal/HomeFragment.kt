@@ -160,6 +160,19 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
     }
     //==========================================================================================================
 
+    //FUNCIONES PARA EL MAPA DESDE MAPSHEET, MOSTRAR MARCADOR
+    private fun checkAndCenterMarker() {
+        // Obtener la latitud y la longitud del Bundle
+        val latitud = arguments?.getDouble("latitud")
+        val longitud = arguments?.getDouble("longitud")
+
+        // Si la latitud y la longitud no son nulas, centrar el mapa en la ubicación del delito
+        if (latitud != null && longitud != null) {
+            val ubicacionDelito = LatLng(latitud, longitud)
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(ubicacionDelito, 15f))
+        }
+    }
+
     //FUNCIONES PARA EL MAPA
     //-------------------------------------------------------------------------------------------------------
     //-------------------------------------------------------------------------------------------------------
@@ -200,6 +213,9 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         }
         // Configura escuchadores de eventos en el mapa
         map.setOnMapClickListener(this)
+
+        // Llama a la función para comprobar y centrar el marcador
+        checkAndCenterMarker()
     }
 
     private fun actualizarMapaConMarcadores(marcadores: List<MarkerOptions>) {

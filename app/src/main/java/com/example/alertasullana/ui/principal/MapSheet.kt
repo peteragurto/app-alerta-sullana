@@ -1,4 +1,4 @@
-package com.example.alertasullana.ui.viewmodel
+package com.example.alertasullana.ui.principal
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.alertasullana.R
+import com.example.alertasullana.data.services.OnMapSheetActionListener
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButton
 import java.text.SimpleDateFormat
@@ -23,6 +24,7 @@ class MapSheet : BottomSheetDialogFragment() {
     private lateinit var fechaSheet: TextView
     private lateinit var descripcionSheet: TextView
     private lateinit var botonVerDelitoEnMapa: MaterialButton
+    var listener: OnMapSheetActionListener? = null
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -57,8 +59,20 @@ class MapSheet : BottomSheetDialogFragment() {
 
         val formattedDate = date?.let { dateFormat.format(it) }
         val formattedTime = date?.let { timeFormat.format(it) }
-        
+
         fechaSheet.text = "La fecha de este delito fue el $formattedDate a las $formattedTime"
+
+        botonVerDelitoEnMapa.setOnClickListener {
+            // Obtener la latitud y la longitud del Bundle
+            val latitud = arguments?.getDouble("ubicacion.latitud")
+            val longitud = arguments?.getDouble("ubicacion.longitud")
+
+            // Llamar a onMapAction con la latitud y la longitud
+            listener?.onMapAction(latitud ?: 0.0, longitud ?: 0.0)
+
+            // Cerrar el BottomSheetDialogFragment
+            dismiss()
+        }
 
         return view
     }
