@@ -99,9 +99,6 @@ class MainActivity : AppCompatActivity(), CameraResultListener, OnMapSheetAction
         val homeFragment = HomeFragment()
         homeFragment.arguments = bundle
 
-        // Seleccionar un elemento por defecto en BottomNavigationView
-        bottomNavigationView.selectedItemId = R.id.bottom_home
-
         // Reemplazar el fragmento actual con HomeFragment
         replaceFragment(homeFragment)
 

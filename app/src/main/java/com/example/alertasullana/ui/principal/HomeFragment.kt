@@ -2,18 +2,29 @@ package com.example.alertasullana.ui.principal
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.ImageFormat
+import android.graphics.SurfaceTexture
+import android.hardware.camera2.CameraAccessException
+import android.hardware.camera2.CameraCaptureSession
+import android.hardware.camera2.CameraDevice
+import android.hardware.camera2.CameraManager
+import android.hardware.camera2.CameraMetadata
+import android.hardware.camera2.CaptureRequest
+import android.hardware.camera2.TotalCaptureResult
 import android.location.LocationManager
+import android.media.Image
+import android.media.ImageReader
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Surface
+import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -40,8 +51,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListener, ConnectivityChecker.ConnectivityChangeListener {
 
+    //Variables para la cámara
+    private lateinit var textureView: TextureView
     //Instancia de mapa de Google
     private lateinit var map: GoogleMap
+
+    private lateinit var fab: FloatingActionButton
     //Fused Location instancia
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     //Instancia de ImagenCapturaListener
@@ -52,6 +67,69 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
     private val connectivityChecker: ConnectivityChecker by lazy { ConnectivityChecker(requireContext()) }
     //Instancia de MarcadorViewModel
     private lateinit var marcadorViewModel: MarcadorViewModel
+
+    private val stateCallback = object : CameraDevice.StateCallback() {
+        override fun onOpened(cameraDevice: CameraDevice) {
+            // Cámara abierta, puedes proceder a tomar una foto aquí
+            // Cámara abierta, puedes proceder a tomar una foto aquí
+            val imageReader = ImageReader.newInstance(1080, 1920, ImageFormat.JPEG, 2)
+            val outputSurfaces = ArrayList<Surface>(2)
+            outputSurfaces.add(imageReader.surface)
+            outputSurfaces.add(Surface(textureView.surfaceTexture))
+
+            val captureBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE)
+            captureBuilder.addTarget(imageReader.surface)
+            captureBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO)
+
+            // Aquí puedes configurar otros parámetros de la captura de la imagen si es necesario.
+            val readerListener = object : ImageReader.OnImageAvailableListener {
+                override fun onImageAvailable(reader: ImageReader?) {
+                    var image: Image? = null
+                    try {
+                        image = reader?.acquireLatestImage()
+                        val buffer = image?.planes?.get(0)?.buffer
+                        val bytes = ByteArray(buffer?.capacity() ?: 0)
+                        buffer?.get(bytes)
+                        val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                        // Aquí tienes tu Bitmap. Puedes pasarlo a HacerReporteFragment a través de un método en tu interfaz CameraResultListener.
+                        // Aquí tienes tu Bitmap. Puedes pasarlo a HacerReporteFragment a través de un método en tu interfaz CameraResultListener.
+                        (activity as MainActivity).onCameraResult(bitmap)
+                    } finally {
+                        image?.close()
+                    }
+                }
+            }
+            // Aquí puedes configurar otros parámetros de la captura de la imagen si es necesario.
+            imageReader.setOnImageAvailableListener(readerListener, null)
+            val captureListener = object : CameraCaptureSession.CaptureCallback() {
+                override fun onCaptureCompleted(session: CameraCaptureSession, request: CaptureRequest, result: TotalCaptureResult) {
+                    super.onCaptureCompleted(session, request, result)
+                    // Aquí puedes manejar el resultado de la captura de la imagen si es necesario.
+                }
+            }
+            // Aquí puedes configurar otros parámetros de la captura de la imagen si es necesario.
+            cameraDevice.createCaptureSession(outputSurfaces, object : CameraCaptureSession.StateCallback() {
+                override fun onConfigured(session: CameraCaptureSession) {
+                    try {
+                        session.capture(captureBuilder.build(), captureListener, null)
+                    } catch (e: CameraAccessException) {
+                        e.printStackTrace()
+                    }
+                }
+                override fun onConfigureFailed(session: CameraCaptureSession) {
+                    // Aquí puedes manejar el caso en que la configuración de la sesión de captura falla.
+                }
+            }, null)
+        }
+
+        override fun onDisconnected(cameraDevice: CameraDevice) {
+            // Cámara desconectada
+        }
+
+        override fun onError(cameraDevice: CameraDevice, error: Int) {
+            // Ocurrió un error
+        }
+    }
     companion object {
         //Código para permisos de ubicación
         private val LOCATION_PERMISSION_REQUEST = 1
@@ -73,6 +151,64 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         }
 
         val view = inflater.inflate(R.layout.fragment_home, container, false)
+
+        textureView = view?.findViewById(R.id.textureView) ?: TextureView(requireContext())
+        textureView.surfaceTextureListener = object : TextureView.SurfaceTextureListener {
+            override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
+                // Botón flotante para abrir la cámara
+                fab = view?.findViewById(R.id.fab) ?: FloatingActionButton(requireContext())
+                fab.setOnClickListener {
+                    // Verificar la conectividad antes de realizar acciones que requieran Internet
+                    if (connectivityChecker.isConnectedToInternet()) {
+                        // Acciones que requieren Internet
+                        if(areLocationPermissionsGranted()&&isGpsEnabled()){
+                            // Si los permisos de ubicación están concedidos y el GPS está activado, abrir la cámara
+                            if (areNotificationsEnabled()) {
+                                // Continuar con la lógica de la cámara
+                                openCamera()
+                            } else {
+                                // Mostrar un diálogo al usuario
+                                AlertDialog.Builder(requireContext())
+                                    .setTitle("Habilitar notificaciones")
+                                    .setMessage("Para recibir notificaciones, por favor, habilita las notificaciones para esta aplicación.")
+                                    .setPositiveButton("Ir a configuración") { _, _ ->
+                                        val intent = Intent().apply {
+                                            action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
+                                            putExtra(Settings.EXTRA_APP_PACKAGE, requireContext().packageName)
+                                        }
+                                        startActivity(intent)
+                                    }
+                                    .setNegativeButton("Cancelar") { dialog, _ ->
+                                        dialog.dismiss()
+                                    }
+                                    .create()
+                                    .show()
+                            }
+                        }else{
+                            // Si no, solicitar los permisos o habilitar el GPS según sea necesario
+                            requestLocationAndGps()
+                        }
+                    } else {
+                        // Mostrar un mensaje al usuario indicando la falta de conexión
+                        Toast.makeText(requireContext(), "No hay conexión a Internet", Toast.LENGTH_SHORT).show()
+                    }
+
+                }
+            }
+
+            override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {
+                // Ignorar
+            }
+
+            override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
+                return true
+            }
+
+            override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {
+                // Ignorar
+            }
+        }
+
 
         // Verificar la conectividad antes de realizar acciones que requieran Internet
         if (connectivityChecker.isConnectedToInternet()) {
@@ -99,45 +235,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         marcadorViewModel.cargarReportes()
 
 
-        // Botón flotante para abrir la cámara
-        val fab: FloatingActionButton = view.findViewById(R.id.fab)
-        fab.setOnClickListener {
-            // Verificar la conectividad antes de realizar acciones que requieran Internet
-            if (connectivityChecker.isConnectedToInternet()) {
-                // Acciones que requieren Internet
-                if(areLocationPermissionsGranted()&&isGpsEnabled()){
-                    // Si los permisos de ubicación están concedidos y el GPS está activado, abrir la cámara
-                    if (areNotificationsEnabled()) {
-                        // Continuar con la lógica de la cámara
-                        openCamera()
-                    } else {
-                        // Mostrar un diálogo al usuario
-                        AlertDialog.Builder(requireContext())
-                            .setTitle("Habilitar notificaciones")
-                            .setMessage("Para recibir notificaciones, por favor, habilita las notificaciones para esta aplicación.")
-                            .setPositiveButton("Ir a configuración") { _, _ ->
-                                val intent = Intent().apply {
-                                    action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
-                                    putExtra(Settings.EXTRA_APP_PACKAGE, requireContext().packageName)
-                                }
-                                startActivity(intent)
-                            }
-                            .setNegativeButton("Cancelar") { dialog, _ ->
-                                dialog.dismiss()
-                            }
-                            .create()
-                            .show()
-                    }
-                }else{
-                    // Si no, solicitar los permisos o habilitar el GPS según sea necesario
-                    requestLocationAndGps()
-                }
-            } else {
-                // Mostrar un mensaje al usuario indicando la falta de conexión
-                Toast.makeText(requireContext(), "No hay conexión a Internet", Toast.LENGTH_SHORT).show()
-            }
 
-        }
 
         // Botón para mostrar la ubicación actual del usuario
         val locationButton: FloatingActionButton = view.findViewById(R.id.fab_ubicacion)
@@ -287,17 +385,16 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
         ) {
             // Si los permisos de ubicación están concedidos, obtén la ubicación actual del usuario
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-                location?.let {
-                    // Si la ubicación no es nula, mueve la cámara del mapa a la ubicación actual del usuario
-                    val currentLatLng = LatLng(it.latitude, it.longitude)
-                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17f))
-                } ?: run {
-                    // Manejar el caso en el que la ubicación es nula
-                    Toast.makeText(
-                        requireContext(),
-                        "No se pudo obtener la ubicación actual",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                if (location != null) {
+                    // Verificar si las coordenadas del delito están presentes en los argumentos del fragmento
+                    val latitudDelito = arguments?.getDouble("latitud")
+                    val longitudDelito = arguments?.getDouble("longitud")
+
+                    // Si las coordenadas del delito no están presentes, mover la cámara a la ubicación actual del usuario
+                    if (latitudDelito == null || longitudDelito == null) {
+                        val currentLatLng = LatLng(location.latitude, location.longitude)
+                        map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17f))
+                    }
                 }
             }
         } else {
@@ -379,12 +476,19 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
     private fun enableMyLocation() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED) {
-            map.isMyLocationEnabled = true
-            // Mueve la cámara del mapa a la ubicación actual del usuario
-            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-                if (location != null) {
-                    val currentLatLng = LatLng(location.latitude, location.longitude)
-                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 13f))
+            // Verificar si las coordenadas del delito están presentes en los argumentos del fragmento
+            val latitudDelito = arguments?.getDouble("latitud")
+            val longitudDelito = arguments?.getDouble("longitud")
+
+            // Si las coordenadas del delito no están presentes, habilitar la capa de ubicación en tiempo real
+            if (latitudDelito == null || longitudDelito == null) {
+                map.isMyLocationEnabled = true
+                // Mueve la cámara del mapa a la ubicación actual del usuario
+                fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                    if (location != null) {
+                        val currentLatLng = LatLng(location.latitude, location.longitude)
+                        map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 13f))
+                    }
                 }
             }
         }
@@ -431,13 +535,17 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
 
     //Abrir la cámara
     fun openCamera() {
-        if (checkPermission()) {
-            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            if (takePictureIntent.resolveActivity(requireActivity().packageManager) != null) {
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+        val manager = requireContext().getSystemService(Context.CAMERA_SERVICE) as CameraManager
+        try {
+            val cameraId = manager.cameraIdList[0]
+            val permission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                requestPermission()
+                return
             }
-        } else {
-            requestPermission()
+            manager.openCamera(cameraId, stateCallback, null)
+        } catch (e: CameraAccessException) {
+            e.printStackTrace()
         }
     }
 
@@ -454,12 +562,12 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapClickListene
     }
 
     // Callback para manejar el resultado de la cámara
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             val imageBitmap = data?.extras?.get("data") as Bitmap
             cameraResultListener?.onCameraResult(imageBitmap)
         }
-    }
+    }*/
 
     //-------------------------------------------------------------------------------------------------------
     //-------------------------------------------------------------------------------------------------------

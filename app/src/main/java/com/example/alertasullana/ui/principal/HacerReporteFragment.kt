@@ -6,6 +6,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Matrix
 import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -71,7 +72,16 @@ class HacerReporteFragment : Fragment() {
 
         // Recuperar la imagen de los argumentos
         val imageBitmap = arguments?.getParcelable<Bitmap>("image")
-        imageView.setImageBitmap(imageBitmap)
+
+        // Crear una matriz de rotación
+        val matrix = Matrix()
+        matrix.postRotate(90f) // Rotar 90 grados
+
+        // Crear un nuevo Bitmap que esté rotado
+        val rotatedBitmap = imageBitmap?.let { Bitmap.createBitmap(it, 0, 0, imageBitmap.width, imageBitmap.height, matrix, true) }
+
+        // Establecer el Bitmap rotado en el ImageView
+        imageView.setImageBitmap(rotatedBitmap)
 
         //======================================================================================
         // Solicitar permisos de ubicación si no están concedidos
