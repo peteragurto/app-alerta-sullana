@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/bottom_noti"
-        android:title="Notificación"
+        android:title="Reportes"
         android:icon="@drawable/baseline_notifications_none_24"/>
 
     <item
