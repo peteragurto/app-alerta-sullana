@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/Oscurito"
     android:padding="16dp"
-    tools:context=".ui.viewmodel.DetallesBottomSheetFragment">
+    tools:context=".features.viewmodel.DetallesBottomSheetFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

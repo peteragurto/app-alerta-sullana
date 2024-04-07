@@ -5,7 +5,7 @@
     android:id="@+id/perfil_fragment_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.principal.PerfilFragment">
+    tools:context=".features.principal.PerfilFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

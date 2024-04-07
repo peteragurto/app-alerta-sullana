@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/Oscurito"
+    tools:context=".features.auth.login.LoginFragment">
+
+    <View
+        android:id="@+id/logo_en_registro"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@drawable/alertasullanavector"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvTituloLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo_en_registro"
+        android:text="@string/bienvenidos_a_alerta_sullana"
+        android:textAlignment="center"
+        android:theme="@style/TituloChicahoH2"/>
+
+    <!--TEXTEDITS-->
+
+    <!--Email-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilCorreo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTituloLogin"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginVertical="16dp"
+        android:hint="@string/ingresa_tu_correo"
+        android:textColorHint="@color/design_default_color_on_primary"
+        android:alpha="0.8">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etCorreo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--Password-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tilCorreo"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginVertical="16dp"
+        android:hint="@string/ingresa_tu_contrasena"
+        android:textColorHint="@color/design_default_color_on_primary"
+        android:alpha="0.8">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--Botones-->
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLoginEP"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tilPassword"
+        android:layout_marginVertical="16dp"
+        android:layout_marginHorizontal="32dp"
+        android:text="@string/ingresar"
+        android:theme="@style/TextNormalRubikBotonH5"
+        android:textColor="@color/md_theme_light_onBackground"
+        android:textAlignment="center"
+        app:backgroundTint="@color/botonesintro" />
+
+    <TextView
+        android:id="@+id/tvDivider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnLoginEP"
+        android:text="@string/o"
+        android:theme="@style/TextNormalRubikBotonH5"
+        android:textColor="@color/white"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnGoToRegister"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDivider"
+        android:layout_marginHorizontal="32dp"
+        android:text="@string/registrarse"
+        android:theme="@style/TextNormalRubikBotonH5"
+        android:textColor="@color/md_theme_light_onBackground"
+        android:textAlignment="center"
+        app:backgroundTint="@color/botonesintro" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/dividerLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnGoToRegister"
+        android:layout_marginVertical="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:background="@color/white" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLoginGoogle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dividerLogin"
+        android:layout_marginVertical="16dp"
+        android:layout_marginHorizontal="32dp"
+        android:text="@string/register_google"
+        android:theme="@style/TextNormalRubikBotonH5"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+
+        app:backgroundTint="#EA1D00"
+        app:icon="@drawable/googleicon"
+        app:iconGravity="end"
+        app:iconPadding="10dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,7 +19,7 @@
     <string name="unete">Únete a la comunidad\nque mantiene una\nSullana segura</string>
     <string name="comenzarString">Comenzar</string>
     <string name="register_google">Registrarse con Google</string>
-    <string name="terminos">Al registrarse acepta los términos y condiciones, donde nos \npermita utilizar su información mientras la app este en uso.</string>
+    <string name="terminos">Al registrarse acepta los términos y condiciones, que incluye \nusar su correo electrónico.</string>
     <string name="inicio">Inicio</string>
     <string name="notificacion">Reporte</string>
     <string name="usuario">Usuario</string>
@@ -41,4 +41,12 @@
     <string name="channel_name">Alertas de Reportes</string>
     <string name="channel_description">Notificaciones sobre nuevos reportes en Alerta Sullana</string>
     <string name="ver_delito_en_el_mapa">Ver delito en el mapa</string>
+    <string name="bienvenidos_a_alerta_sullana">Bienvenidos a Alerta Sullana</string>
+    <string name="ingresa_tu_correo">Ingresa tu correo electrónico</string>
+    <string name="ingresa_tu_contrasena">Ingresa tu contraseña</string>
+    <string name="ingresar">Ingresar</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="o">o</string>
+    <string name="registrate_en_nuestra_aplicacion">Registrate en nuestra aplicación</string>
+    <string name="recurso_app">Recurso de la app</string>
 </resources>

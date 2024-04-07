@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/Oscurito"
-    tools:context=".ui.registro.RegistroUsuarioActivity">
+    tools:context=".features.registro.RegistroUsuarioActivity">
 
     <View
         android:id="@+id/logo_en_registro"

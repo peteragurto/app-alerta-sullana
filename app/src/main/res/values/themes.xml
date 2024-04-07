@@ -15,4 +15,29 @@
         <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
         <item name="fullscreenTextColor">@color/light_blue_A200</item>
     </style>
+
+    <!--Letras-->
+    <style name="TituloChicagoH1">
+        <item name="android:fontFamily">@font/chicago_police</item>
+        <item name="android:textSize">36sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TituloChicahoH2" parent="TituloChicagoH1">
+        <item name="android:textSize">32sp</item>
+    </style>
+
+    <style name="TituloChicahoH3" parent="TituloChicagoH1">
+        <item name="android:textSize">28sp</item>
+    </style>
+
+    <style name="TituloChicahoH4" parent="TituloChicagoH1">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="TextNormalRubikBotonH5">
+        <item name="android:fontFamily">@font/rubik</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>
