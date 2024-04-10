@@ -58,7 +58,7 @@
             android:name=".features.registro.RegistroUsuarioActivity"
             android:exported="false" />
         <activity
-            android:name=".features.principal.MainActivity"
+            android:name=".features.main.MainActivity"
             android:exported="false"/>
     </application>
 

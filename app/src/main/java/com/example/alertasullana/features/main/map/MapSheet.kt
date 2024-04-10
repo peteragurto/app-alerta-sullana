@@ -1,4 +1,4 @@
-package com.example.alertasullana.features.principal
+package com.example.alertasullana.features.main.map
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap

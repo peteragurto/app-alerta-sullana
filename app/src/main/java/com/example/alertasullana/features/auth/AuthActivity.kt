@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.alertasullana.R
 import com.example.alertasullana.databinding.ActivityAuthBinding
-import com.example.alertasullana.features.principal.MainActivity
+import com.example.alertasullana.features.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking
 

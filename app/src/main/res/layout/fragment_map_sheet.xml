@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".features.principal.MapSheet"
+    tools:context=".features.main.map.MapSheet"
     android:orientation="vertical"
     android:background="@color/Oscurito"
     android:padding="16dp">
