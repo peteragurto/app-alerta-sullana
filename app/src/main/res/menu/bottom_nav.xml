@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/bottom_home"
-        android:title="Inicio"
+        android:id="@+id/crimeMapFragment"
+        android:title="@string/inicioBN"
         android:icon="@drawable/baseline_home_24"/>
 
     <item
-        android:id="@+id/bottom_noti"
-        android:title="Reportes"
+        android:id="@+id/infoFragment"
+        android:title="@string/reportes"
         android:icon="@drawable/baseline_notifications_none_24"/>
 
     <item
-        android:id="@+id/bottom_users"
-        android:title="Usuario"
+        android:id="@+id/profileFragment"
+        android:title="@string/usuarioBN"
         android:icon="@drawable/baseline_manage_accounts_24"/>
 
 </menu>

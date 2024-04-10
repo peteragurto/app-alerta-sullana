@@ -52,4 +52,7 @@
 
     <string name="oauthclient">820869985928-1v3a6te12rd23du241hrs0asp2gl7pv6.apps.googleusercontent.com</string>
     <string name="cargando">Cargando...</string>
+    <string name="inicioBN">Inicio</string>
+    <string name="reportes">Reportes</string>
+    <string name="usuarioBN">Usuario</string>
 </resources>

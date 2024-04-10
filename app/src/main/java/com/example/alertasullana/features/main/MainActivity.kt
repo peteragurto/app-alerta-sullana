@@ -2,23 +2,38 @@ package com.example.alertasullana.features.main
 
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.example.alertasullana.R
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.alertasullana.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(){
-    //Inicializador de la barra de navegacion
-    private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var binding: ActivityMainBinding
     //Controlador de navegacion
     private lateinit var navController: NavController
-    companion object {
-        const val CHANNEL_ID = "channel_id"
-    }
+
+    private val mainViewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        initUI()
+    }
+
+    private fun initUI() {
+        initNavigation()
+    }
+
+    private fun initNavigation() {
+        val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerViewMain) as NavHostFragment
+        navController = navHost.navController
+        binding.bottomNavBar.setupWithNavController(navController)
     }
 
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/profileFragment">
+
+    <fragment
+        android:id="@+id/crimeMapFragment"
+        android:name="com.example.alertasullana.features.main.map.CrimeMapFragment"
+        android:label="fragment_crime_map"
+        tools:layout="@layout/fragment_crime_map" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.alertasullana.features.main.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="com.example.alertasullana.features.main.info.InfoFragment"
+        android:label="fragment_info"
+        tools:layout="@layout/fragment_info" />
+</navigation>
