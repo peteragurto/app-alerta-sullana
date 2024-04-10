@@ -49,4 +49,7 @@
     <string name="o">o</string>
     <string name="registrate_en_nuestra_aplicacion">Registrate en nuestra aplicación</string>
     <string name="recurso_app">Recurso de la app</string>
+
+    <string name="oauthclient">820869985928-1v3a6te12rd23du241hrs0asp2gl7pv6.apps.googleusercontent.com</string>
+    <string name="cargando">Cargando...</string>
 </resources>

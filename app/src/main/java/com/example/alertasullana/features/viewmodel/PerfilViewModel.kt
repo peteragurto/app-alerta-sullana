@@ -22,16 +22,7 @@ class PerfilViewModel(private val firebaseRepositoryImpl: FirebaseAuthRepository
     val navegarARegistro: LiveData<Boolean> get() = _navegarARegistro
 
     init {
-        // Verificar si el usuario ya ha iniciado sesión
-        val currentUser = firebaseRepositoryImpl.obtenerUsuarioActual()
-        if (currentUser != null) {
-            _nombreUsuario.value = currentUser.displayName
-            _correoUsuario.value = currentUser.email
-            _urlFotoPerfil.value = currentUser.photoUrl?.toString()
 
-            // Guardar los datos en SharedPreferences
-            usuarioRepository.guardarDatosEnSharedPreferences(currentUser)
-        }
     }
 
     // Método para actualizar los datos del usuario
@@ -41,10 +32,4 @@ class PerfilViewModel(private val firebaseRepositoryImpl: FirebaseAuthRepository
         _urlFotoPerfil.value = urlFoto
     }
 
-
-    // Método para cerrar sesión y navegar a la actividad de registro
-    fun cerrarSesionYNavegarARegistro() {
-        firebaseRepositoryImpl.cerrarSesion()
-        _navegarARegistro.value = true
-    }
 }

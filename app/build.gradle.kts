@@ -73,9 +73,12 @@ dependencies {
     implementation("com.google.firebase:firebase-storage-ktx")
     //-> Autenticación
     implementation("com.google.firebase:firebase-auth-ktx")
-
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
     //Location
     implementation("com.google.android.gms:play-services-location:21.2.0")
+
+    //DataStore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     //Mapa Dependencias
     implementation("com.google.android.gms:play-services-maps:18.2.0")

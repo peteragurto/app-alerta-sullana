@@ -9,17 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.example.alertasullana.R
-import com.example.alertasullana.data.repository.FirebaseAuthRepositoryImpl
 import com.example.alertasullana.data.repository.UsuarioRepository
+import com.example.alertasullana.features.auth.AuthActivity
+import com.example.alertasullana.features.auth.AuthViewModel
 import com.example.alertasullana.features.viewmodel.PerfilViewModel
-import com.example.alertasullana.features.viewmodel.PerfilViewModelFactory
 import com.google.android.material.materialswitch.MaterialSwitch
 
 
@@ -27,10 +23,12 @@ class PerfilFragment : Fragment() {
 
     //Importando ViewModel de Perfil
     private lateinit var perfilViewModel: PerfilViewModel
+    private lateinit var authViewModel: AuthViewModel
 
 
     // Declara switchNotificaciones como una propiedad de PerfilFragment
     private lateinit var switchNotificaciones: MaterialSwitch
+    private lateinit var btnSalir: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -61,35 +59,12 @@ class PerfilFragment : Fragment() {
 
         //-------------------------------------------------------RECUPERACIÓN DE DATOS DE USUARIO
         // Inicializar ViewModel con el repositorio
-        perfilViewModel = ViewModelProvider(
-            this,
-            PerfilViewModelFactory(FirebaseAuthRepositoryImpl(), usuarioRepository)
-        ).get(PerfilViewModel::class.java)
-        // Observar cambios en los datos del usuario y actualizar la interfaz
-        perfilViewModel.nombreUsuario.observe(viewLifecycleOwner) { nombre ->
-            view?.findViewById<TextView>(R.id.nombreUser)?.text = nombre
-        }
-        perfilViewModel.correoUsuario.observe(viewLifecycleOwner) { correo ->
-            view?.findViewById<TextView>(R.id.correoUser)?.text = correo
-        }
-        perfilViewModel.urlFotoPerfil.observe(viewLifecycleOwner) { urlFoto ->
-            // Utilizar Glide para cargar la imagen desde la URL
-            view?.findViewById<ImageView>(R.id.imagenProfile)?.let {
-                Glide.with(requireContext())
-                    .load(urlFoto)
-                    .placeholder(R.drawable.usuario) // Recurso por defecto si no hay URL de foto
-                    .into(it)
-            }
-        }
+
         //---------------------------------------------------RECUPERACIÓN DE DATOS DE USUARIO
 
 
         //-------------------------------------------CERRAR SESION Y NAVEGAR A REGISTRO
-        // Observar cambios en la navegación y realizar la acción correspondiente
-        view?.findViewById<Button>(R.id.btnSalirApp)?.setOnClickListener {
-            perfilViewModel.cerrarSesionYNavegarARegistro()
-        }
-        //-----------------------------------------CERRAR SESION Y NAVEGAR A REGISTRO
+
 
 
         //SWITCH FUNCIONALIDAD------------------------------------------------------------
@@ -134,8 +109,19 @@ class PerfilFragment : Fragment() {
             }
         }
 
+        btnSalir = view.findViewById(R.id.btnSalirApp)
+        btnSalir.setOnClickListener {
+            authViewModel.logout()
+            goToAuth()
+        }
+
 
         return view
+    }
+
+    private fun goToAuth() {
+        val intentSalir = Intent(context, AuthActivity::class.java)
+        startActivity(intentSalir)
     }
 
     override fun onResume() {
@@ -151,7 +137,5 @@ class PerfilFragment : Fragment() {
         switchNotificaciones.isChecked = areNotificationsEnabled
     }
 
-    companion object {
 
-    }
 }
