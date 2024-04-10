@@ -36,6 +36,6 @@ class CrimeMapFragment : Fragment() {
     }
 
     private fun initUI() {
-        TODO("Not yet implemented")
+
     }
 }

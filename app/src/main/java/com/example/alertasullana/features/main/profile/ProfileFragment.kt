@@ -39,7 +39,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initListeners() {
-        TODO("Not yet implemented")
+        binding.btnSalirApp.setOnClickListener {  }
     }
 
     private fun goToAuth() {

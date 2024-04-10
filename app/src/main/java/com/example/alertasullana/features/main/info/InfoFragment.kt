@@ -41,7 +41,7 @@ class InfoFragment : Fragment() {
     }
 
     private fun initListeners() {
-        TODO("Not yet implemented")
+
     }
 
 }

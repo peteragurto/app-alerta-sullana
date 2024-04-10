@@ -3,11 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="CoarseFineLocation">
     <!-- Internet -->
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- Ubicacion -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Ubicacion -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Camara -->
-    <uses-permission android:name="android.permission.CAMERA" /> <!-- Memoria externa -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- Verificar conexion -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- Camara -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- Verificar conexion -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-feature
@@ -40,20 +42,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
         <activity
             android:name=".features.splash.SplashActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
         </activity>
-
-        <activity
-            android:name=".features.splash.IntroActivity"
-            android:exported="false" />
         <activity
             android:name=".features.registro.RegistroUsuarioActivity"
             android:exported="false" />
