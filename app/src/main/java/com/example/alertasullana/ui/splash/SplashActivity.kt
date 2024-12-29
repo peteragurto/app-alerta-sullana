@@ -7,7 +7,7 @@ import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.example.alertasullana.R
 import com.example.alertasullana.data.repository.FirebaseRepository
-import com.example.alertasullana.ui.principal.MainActivity
+import com.example.alertasullana.ui.MainActivity
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {

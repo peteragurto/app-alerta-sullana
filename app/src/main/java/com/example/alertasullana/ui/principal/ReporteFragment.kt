@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.example.alertasullana.ui.MainActivity
 import com.example.alertasullana.R
 import com.example.alertasullana.data.model.Reporte
 import com.example.alertasullana.ui.viewmodel.ReporteViewModel
