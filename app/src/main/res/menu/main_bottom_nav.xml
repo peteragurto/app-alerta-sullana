@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item
-        android:id="@+id/bottom_home"
-        android:title="Inicio"
+        android:id="@+id/homeFragment"
+        android:title="@string/inicio"
         android:icon="@drawable/baseline_home_24"/>
 
     <item
-        android:id="@+id/bottom_noti"
-        android:title="Reportes"
+        android:id="@+id/reporteFragment"
+        android:title="@string/reportes"
         android:icon="@drawable/baseline_notifications_none_24"/>
 
     <item
-        android:id="@+id/bottom_users"
-        android:title="Usuario"
+        android:id="@+id/perfilFragment"
+        android:title="@string/configuracion"
         android:icon="@drawable/baseline_manage_accounts_24"/>
-
 </menu>
